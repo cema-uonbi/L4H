@@ -76,36 +76,37 @@ The socio-economic index was calculated using assets collected during the study 
 # Results
 
 
-![](schematic_diagram_L4H.png)
+
+
 ##  Feed distribution
 
 ```{r, import data, include=FALSE}
 ##import baseline household data
-household_baseline <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20baseline%20data.csv")%>%
-  clean_names() %>%
+household_baseline <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20baseline%20data.csv")|>
+  clean_names() |>
   mutate(interview_date=dmy(interview_date))
 ##import followup data
-followup_data <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20followup%20data.csv") %>%
-  clean_names()  %>%
+followup_data <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20followup%20data.csv") |>
+  clean_names()  |>
   mutate(interview_date=dmy(interview_date))
 
-mother_baseline <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20baseline%20mother%20data.csv")%>%
-  clean_names()  %>%
+mother_baseline <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20baseline%20mother%20data.csv")|>
+  clean_names()  |>
   mutate(interview_date=dmy(interview_date))
 
-mother_anthro <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20baseline%20mother%20anthro.csv")%>%
+mother_anthro <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20baseline%20mother%20anthro.csv")|>
   clean_names()
 
 ##import baseline child data (data&anthro)
-child_baseline <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20child%20baseline%20data.csv")%>%
+child_baseline <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20child%20baseline%20data.csv")|>
   clean_names()
 
-child_anthro <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20baseline%20child%20anthro.csv")%>%
+child_anthro <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20baseline%20child%20anthro.csv")|>
   clean_names()
 
 ##import quarterly household data
-household_quarterly <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20quarterly%20data.csv")%>%
-  clean_names() %>%
+household_quarterly <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20quarterly%20data.csv")|>
+  clean_names() |>
   mutate(interview_date=as.Date(interview_date, origin="1970-01-01"))
 
 ##import quarterly individual data
@@ -125,11 +126,11 @@ child_quarterly_r <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/
 mother_followup<- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20mother%20followup.csv")
 
 ##import 6wk child data-followup
-child_followup <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20child%20followup%20data.csv")%>%
+child_followup <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20child%20followup%20data.csv")|>
   clean_names()
 
 ##import 6wk child data-recruit
-child_followup_r <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20child%20followup%20recruit%20data.csv")%>%
+child_followup_r <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20child%20followup%20recruit%20data.csv")|>
   clean_names()
 
 
@@ -137,156 +138,155 @@ child_followup_r <- read_csv("https://raw.githubusercontent.com/cema-uonbi/L4H/m
 ```
 
 
-
 ```{r, milk yield, include=F}
 
 #milk:baseline
-household_bl_milk <- household_baseline%>%
-  dplyr::select(interview_date,household_id,study_arm,cwslactatn, shplactatn,gtslactatn,cmlslactatn, cows_litres,sheep_litres,goats_litres,camels_litres, dtefdprvdd)%>%
+household_bl_milk <- household_baseline|>
+  dplyr::select(interview_date,household_id,study_arm,cwslactatn, shplactatn,gtslactatn,cmlslactatn, cows_litres,sheep_litres,goats_litres,camels_litres, dtefdprvdd)|>
   distinct()
 
 #milk:followup
-followup_milk <- followup_data%>%
-  dplyr::select(interview_date,household_id,study_arm,cwslactatn, shplactatn,gtslactatn,cmlslactatn,cows_litres,sheep_litres,goats_litres,camels_litres, dtefdprvdd)%>%
+followup_milk <- followup_data|>
+  dplyr::select(interview_date,household_id,study_arm,cwslactatn, shplactatn,gtslactatn,cmlslactatn,cows_litres,sheep_litres,goats_litres,camels_litres, dtefdprvdd)|>
   distinct()
 
 #milk:quarterly
-household_ql_milk <- household_quarterly%>%
+household_ql_milk <- household_quarterly|>
   dplyr::select(interview_date,household_id,study_arm,cwslactatn, shplactatn,gtslactatn,cmlslactatn,cows_litres,sheep_litres,goats_litres,camels_litres,dtefdprvdd)
   
 
 # combined household data
-household_comb <- household_bl_milk%>%
-  rbind(household_ql_milk , followup_milk)%>%
-  mutate(interview_date=dmy(interview_date))
+household_comb <- household_bl_milk|>
+  rbind(household_ql_milk , followup_milk)#|>
+ # mutate(interview_date=dmy(interview_date))
   
 ### calculate the milk yield
-hh_milk<- household_comb%>%
-  distinct()%>%
-  mutate(interview_week=floor_date(interview_date,"week"))%>%
-  group_by(interview_date, household_id)%>%
-  dplyr::mutate_at(c('cows_litres', 'sheep_litres', 'goats_litres', 'camels_litres'), as.numeric) %>%
-  dplyr::mutate_at(c('cwslactatn', 'shplactatn', 'gtslactatn', 'cmlslactatn'), as.numeric) %>%
-  mutate(animal_litres = sum(cows_litres, sheep_litres, goats_litres, camels_litres, na.rm=T)) %>%
+hh_milk<- household_comb|>
+  distinct()|>
+  mutate(interview_week=floor_date(interview_date,"week"))|>
+  group_by(interview_date, household_id)|>
+  dplyr::mutate_at(c('cows_litres', 'sheep_litres', 'goats_litres', 'camels_litres'), as.numeric) |>
+  dplyr::mutate_at(c('cwslactatn', 'shplactatn', 'gtslactatn', 'cmlslactatn'), as.numeric) |>
+  mutate(animal_litres = sum(cows_litres, sheep_litres, goats_litres, camels_litres, na.rm=T)) |>
   mutate(cows=cows_litres/cwslactatn,
          sheep=sheep_litres/shplactatn,
          goats=goats_litres/gtslactatn,
-         camels=camels_litres/cmlslactatn)%>%
-  ungroup()%>%
-  pivot_longer(c(cows_litres, sheep_litres, camels_litres, goats_litres), names_to="animals_ltrs", values_to="species_litres")%>%
-  pivot_longer(c(cwslactatn, shplactatn,gtslactatn,cmlslactatn), names_to="spcs", values_to="species1")%>%
-  dplyr::select(interview_week,household_id,study_arm,animals_ltrs,species_litres, dtefdprvdd, spcs, species1)%>%
-  filter(!(is.na(species_litres)))%>%
-  separate(animals_ltrs, into = c("species","ltrs"),sep = "_")%>%
-  dplyr::select(interview_week,household_id,study_arm,species,species_litres, dtefdprvdd, spcs, species1)%>%
-  distinct()%>%
-  mutate(spcs=recode(spcs, "cwslactatn"="Cows", "shplactatn"="Sheep","gtslactatn"="Goats","cmlslactatn"="Camels"))%>%
+         camels=camels_litres/cmlslactatn)|>
+  ungroup()|>
+  pivot_longer(c(cows_litres, sheep_litres, camels_litres, goats_litres), names_to="animals_ltrs", values_to="species_litres")|>
+  pivot_longer(c(cwslactatn, shplactatn,gtslactatn,cmlslactatn), names_to="spcs", values_to="species1")|>
+  dplyr::select(interview_week,household_id,study_arm,animals_ltrs,species_litres, dtefdprvdd, spcs, species1,animal_litres)|>
+  filter(!(is.na(species_litres)))|>
+  separate(animals_ltrs, into = c("species","ltrs"),sep = "_")|>
+  dplyr::select(interview_week,household_id,study_arm,species,species_litres, dtefdprvdd, spcs, species1,animal_litres)|>
+  distinct()|>
+  mutate(spcs=recode(spcs, "cwslactatn"="Cows", "shplactatn"="Sheep","gtslactatn"="Goats","cmlslactatn"="Camels"))|>
   mutate(season= ifelse(interview_week<as.Date("2020-02-08"), "Season 1", ifelse(interview_week>as.Date("2020-02-07") & interview_week<as.Date("2020-05-29"), "Season 2- (Dry)", ifelse(interview_week>as.Date("2020-05-28") & interview_week<as.Date("2020-08-19"), "Season 3", ifelse(interview_week>as.Date("2020-08-18") & interview_week<as.Date("2020-12-01"), "Season 4 (Dry)", ifelse(interview_week>as.Date("2020-11-29") & interview_week<as.Date("2021-01-13"), "Season 5", ifelse(interview_week>as.Date("2021-01-12") & interview_week<as.Date("2021-05-01"),"Season 6 (Dry)", ifelse(interview_week>as.Date("2021-04-30") & interview_week<as.Date("2021-08-30"), "Season 7", "Season 8-(Dry)"))))))))
 
-hh_milk1 <- hh_milk%>%
-  mutate(feeds_date1 = lubridate::dmy(dtefdprvdd)) %>%
-  group_by(season, household_id)%>%
-  mutate(feeds_date1=lubridate::dmy(min(dtefdprvdd, na.rm=T)))%>%
-  mutate(feeds_date2=feeds_date1+90)%>%
-  mutate(feeds_date3=ifelse(is.na(feeds_date1), "No", "Yes"))%>%
-  group_by(interview_week,household_id)%>%
-  mutate(total_milk=round(sum(species_litres)))%>%
-  ungroup()%>%
-  distinct(interview_week,household_id,study_arm,total_milk, season)%>%
-  mutate(treatment=ifelse(study_arm%in%"Control arm", "No", "Yes"))%>%
-  group_by(interview_week,study_arm, season)%>%
-  mutate(avrg_milk=mean(total_milk,na.rm=T))%>%
-  ungroup()%>%
+hh_milk1 <- hh_milk|>
+  mutate(feeds_date1 = lubridate::dmy(dtefdprvdd)) |>
+  group_by(season, household_id)|>
+  mutate(feeds_date1=lubridate::dmy(min(dtefdprvdd, na.rm=T)))|>
+  mutate(feeds_date2=feeds_date1+90)|>
+  mutate(feeds_date3=ifelse(is.na(feeds_date1), "No", "Yes"))|>
+  group_by(interview_week,household_id)|>
+  mutate(total_milk=round(sum(species_litres)))|>
+  ungroup()|>
+  distinct(interview_week,household_id,study_arm,total_milk, season)|>
+  mutate(treatment=ifelse(study_arm%in%"Control arm", "No", "Yes"))|>
+  group_by(interview_week,study_arm, season)|>
+  mutate(avrg_milk=mean(total_milk,na.rm=T))|>
+  ungroup()|>
   mutate(study_arm=recode(study_arm, "1"="Intervention arm 1 (feeds)", "2"="Intervention arm 2 (feeds+ counselling)", "3"="Control arm"))
 
   
 # calculate average milk yield
-hh_milk1a<- hh_milk%>%
-  mutate(species=str_to_title(species))%>%
-  group_by( interview_week, household_id)%>%
-  mutate(species2= ifelse(species==spcs, species1, NA))%>%
-  dplyr::select(-species1, -spcs)%>%
-  distinct()%>%
-  filter(!is.na(species2))%>%
-  group_by(interview_week, household_id)%>%
-  mutate(species_litres=sum(species_litres, na.rm=T))%>%
-  mutate(species2=sum(species2, na.rm=T))%>%
-  mutate(average=species_litres/species2, na.rm=T)%>%
-  ungroup()%>%
-  dplyr::select(study_arm, interview_week,species, species_litres, average)%>%
+hh_milk1a<- hh_milk|>
+  mutate(species=str_to_title(species))|>
+  group_by( interview_week, household_id)|>
+  mutate(species2= ifelse(species==spcs, species1, NA))|>
+  dplyr::select(-species1, -spcs)|>
+  distinct()|>
+  filter(!is.na(species2))|>
+  group_by(interview_week, household_id)|>
+  mutate(species_litres=sum(species_litres, na.rm=T))|>
+  mutate(species2=sum(species2, na.rm=T))|>
+  mutate(average=species_litres/species2, na.rm=T)|>
+  ungroup()|>
+  dplyr::select(study_arm, interview_week,species, species_litres, average)|>
      mutate(season= ifelse(interview_week<as.Date("2020-01-01"), "Season 1", ifelse(interview_week>as.Date("2019-12-31") & interview_week<as.Date("2020-03-31"), "Season 2- (Dry)", ifelse(interview_week>as.Date("2020-03-30") & interview_week<as.Date("2020-07-01"), "Season 3", ifelse(interview_week>as.Date("2020-06-30") & interview_week<as.Date("2020-10-30"), "Season 4 (Dry)", ifelse(interview_week>as.Date("2020-10-29") & interview_week<as.Date("2021-01-01"), "Season 5", ifelse(interview_week>as.Date("2020-12-31") & interview_week<as.Date("2021-03-31"),"Season 6 (Dry)", ifelse(interview_week>as.Date("2021-03-30") & interview_week<as.Date("2021-07-01"), "Season 7", ifelse(interview_week>as.Date("2021-06-30") & interview_week<as.Date("2021-10-30"),"Season 8-(Dry)", "Season 9")))))))))
 
   
-milk_yield <- hh_milk1%>%dplyr::select(-avrg_milk)
+milk_yield <- hh_milk1|>dplyr::select(-avrg_milk)
 
 
-hh_milk_1<- hh_milk%>%
+hh_milk_1<- hh_milk|>
  # pivot_longer(c(cows_litres, sheep_litres, camels_litres, goats_litres), names_to="animals", values_to="ltrs")
 #"Season 8-(Dry)", "Season 6 (Dry)", "Season 4 (Dry)", "Season 2- (Dry)" 
-#hh_milk%>%
-  ungroup()%>%
-     filter(season%in%c("Season 8-(Dry)", "Season 6 (Dry)", "Season 4 (Dry)", "Season 2- (Dry)"))%>%
-     group_by(study_arm)%>%
-     get_summary_stats(sheep, type = "mean_ci")
+#hh_milk|>
+  ungroup()|>
+     filter(season%in%c("Season 8-(Dry)", "Season 6 (Dry)", "Season 4 (Dry)", "Season 2- (Dry)"))|>
+     group_by(study_arm)|>
+     get_summary_stats(animal_litres, type = "mean_ci")
 
-hh_milk%>%
-  ungroup()%>%
-  filter(!(season%in%c("Season 8-(Dry)", "Season 6 (Dry)", "Season 4 (Dry)", "Season 2- (Dry)")))%>%
-  mutate(animal_litres=animal_litres/1000)%>%
- # group_by(study_arm)%>%
+hh_milk|>
+  ungroup()|>
+  filter(!(season%in%c("Season 8-(Dry)", "Season 6 (Dry)", "Season 4 (Dry)", "Season 2- (Dry)")))|>
+ # mutate(animal_litres=animal_litres/1000)|>
+ # group_by(study_arm)|>
   anova_test(animal_litres~study_arm)
 
 
-hh_milk1b<- hh_milk%>%
-  mutate(species=str_to_title(species))%>%
-  group_by( interview_week, household_id)%>%
-  mutate(species2= ifelse(species==spcs, species1, NA))%>%
-  dplyr::select(-species1, -spcs)%>%
-  distinct()%>%
-  filter(!is.na(species2))%>%
-  group_by(interview_week, household_id, species)%>%
-  mutate(animal_litres=sum(animal_litres, na.rm=T))%>%
-  mutate(species2=sum(species2, na.rm=T))%>%
-  mutate(average=animal_litres/species2)%>%
-  ungroup()%>%
-  dplyr::select(study_arm, interview_week,species, species2)%>%
+hh_milk1b<- hh_milk|>
+  mutate(species=str_to_title(species))|>
+  group_by( interview_week, household_id)|>
+  mutate(species2= ifelse(species==spcs, species1, NA))|>
+  dplyr::select(-species1, -spcs)|>
+  distinct()|>
+  filter(!is.na(species2))|>
+  group_by(interview_week, household_id, species)|>
+  mutate(animal_litres=sum(animal_litres, na.rm=T))|>
+  mutate(species2=sum(species2, na.rm=T))|>
+  mutate(average=animal_litres/species2)|>
+  ungroup()|>
+  dplyr::select(study_arm, interview_week,species, species2)|>
   mutate(season= ifelse(interview_week<as.Date("2020-01-01"), "Season 1", ifelse(interview_week>as.Date("2019-12-31") & interview_week<as.Date("2020-03-31"), "Season 2- (Dry)", ifelse(interview_week>as.Date("2020-03-30") & interview_week<as.Date("2020-07-01"), "Season 3", ifelse(interview_week>as.Date("2020-06-30") & interview_week<as.Date("2020-10-30"), "Season 4 (Dry)", ifelse(interview_week>as.Date("2020-10-29") & interview_week<as.Date("2021-01-01"), "Season 5", ifelse(interview_week>as.Date("2020-12-31") & interview_week<as.Date("2021-03-31"),"Season 6 (Dry)", ifelse(interview_week>as.Date("2021-03-30") & interview_week<as.Date("2021-07-01"), "Season 7", ifelse(interview_week>as.Date("2021-06-30") & interview_week<as.Date("2021-10-30"),"Season 8-(Dry)", "Season 9")))))))))
 
 
 
 #"Season 8-(Dry)", "Season 6 (Dry)", "Season 4 (Dry)", "Season 2- (Dry)"
 
-hh_milk1b%>%
-  ungroup()%>%
-  filter(season%in%c("Season 6 (Dry)"))%>%
-  filter(species%in%"Cows")%>%
-  mutate(average=average/1000)%>%
-  group_by(study_arm)%>%
+hh_milk1a|>
+  ungroup()|>
+  filter(season%in%c("Season 6 (Dry)"))|>
+  filter(species%in%"Cows")|>
+  mutate(average=average/1000)|>
+  group_by(study_arm)|>
   get_summary_stats(average, type = "mean_sd")
 
 
-hh_milk1b%>%
-  ungroup()%>%
-  filter(season%in%c("Season 1"))%>%
-  filter(species%in%"Cows")%>%
- # mutate(average=average)%>%
-  group_by(study_arm)%>%
+hh_milk1a|>
+  ungroup()|>
+  filter(season%in%c("Season 1"))|>
+  filter(species%in%"Cows")|>
+ # mutate(average=average)|>
+  group_by(study_arm)|>
   get_summary_stats(average, type = "mean_sd")
 
 
-hh_milk%>%
-     filter(season%in%c("Season 7"))%>%
-  filter(spcs%in%"Goats")%>%
-     #mutate(species2=species2)%>%
-     group_by(study_arm)%>%
+hh_milk|>
+     filter(season%in%c("Season 7"))|>
+  filter(spcs%in%"Goats")|>
+     #mutate(species2=species2)|>
+     group_by(study_arm)|>
      get_summary_stats(species1, type = "mean_sd")
 
-hh_milk1b%>%
-   filter(season%in%c("Season 8-(Dry)"))%>%
-  filter(species%in%"Cows")%>%
-     mutate(species2=species2/7)%>%
- # group_by(study_arm)%>%
-  anova_test(species2~study_arm)
+# hh_milk1b|>
+#    filter(season%in%c("Season 8-(Dry)"))|>
+#   filter(species%in%"Cows")|>
+#      mutate(species2=species2/7)|>
+#  # group_by(study_arm)|>
+#   anova_test(species2~study_arm)
 
 
 ###plot milk yield
@@ -304,12 +304,12 @@ yield_plot2 <- ggplot(hh_milk1a, aes(x=as.Date(interview_week), y=animal_litres,
 #ggsave("milk_yield_avrg.png",yield_plot2, width=16, height=10)
 
 
-avg<- hh_milk1a%>%
-  ungroup()%>%
-  group_by(season, study_arm)%>%
-  mutate(average1=mean(animal_litres, na.rm=T))%>%
-  ungroup()%>%
-  dplyr::select(season, study_arm, average1)%>%
+avg<- hh_milk|>
+  ungroup()|>
+  group_by(season, study_arm)|>
+  mutate(average1=mean(animal_litres, na.rm=T))|>
+  ungroup()|>
+  dplyr::select(season, study_arm, average1)|>
   distinct()
   
   
@@ -335,11 +335,11 @@ yield_plot2
 
 
 
-avg<- hh_milk1a%>%
-  dplyr::group_by(season, study_arm)%>%
-  mutate(average1=mean(species_litres, na.rm=T))%>%
-  ungroup()%>%
-  dplyr::select(season, study_arm, average1)%>%
+avg<- hh_milk1a|>
+  dplyr::group_by(season, study_arm)|>
+  mutate(average1=mean(species_litres, na.rm=T))|>
+  ungroup()|>
+  dplyr::select(season, study_arm, average1)|>
   distinct()
   
   
@@ -349,26 +349,26 @@ avg<- hh_milk1a%>%
 
 ```{r socioeconomic_index, include=F}
 
-baseline_assets<- household_baseline%>%
-  janitor::clean_names()%>%
-  dplyr::select(household_id, interview_date, hvephne, h_hassets1, h_hassets2, h_hassets3, h_hassets4, h_hassets5, toiletfclty, flrmtrl1, flrmtrl2, flrmtrl3, roofmtrl1, roofmtrl2, roofmtrl3, extrmtrl1, extrmtrl2, extrmtrl3, hhelectrcty)%>%
-  mutate(visit=1)%>%
+baseline_assets<- household_baseline|>
+  janitor::clean_names()|>
+  dplyr::select(household_id, interview_date, hvephne, h_hassets1, h_hassets2, h_hassets3, h_hassets4, h_hassets5, toiletfclty, flrmtrl1, flrmtrl2, flrmtrl3, roofmtrl1, roofmtrl2, roofmtrl3, extrmtrl1, extrmtrl2, extrmtrl3, hhelectrcty)|>
+  mutate(visit=1)|>
   dplyr::select(-interview_date)
 
-quarterly_assets<- household_quarterly%>%
-  janitor::clean_names()%>%
-  dplyr::select(household_id, interview_date,hvepne, h_hassets1, h_hassets2, h_hassets3, h_hassets4, h_hassets5, toiletfclty, flrmtrl1, flrmtrl2, flrmtrl3, roofmtrl1, roofmtrl2, roofmtrl3, extrmtrl1, extrmtrl2, extrmtrl3, hhelectrcty)%>%
-  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))%>%
-  rename(hvephne=hvepne)%>%
+quarterly_assets<- household_quarterly|>
+  janitor::clean_names()|>
+  dplyr::select(household_id, interview_date,hvepne, h_hassets1, h_hassets2, h_hassets3, h_hassets4, h_hassets5, toiletfclty, flrmtrl1, flrmtrl2, flrmtrl3, roofmtrl1, roofmtrl2, roofmtrl3, extrmtrl1, extrmtrl2, extrmtrl3, hhelectrcty)|>
+  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))|>
+  rename(hvephne=hvepne)|>
    dplyr::select(-interview_date)
   
 
-assets<- rbind(baseline_assets, quarterly_assets)%>%
-  group_by(household_id, visit)%>%
+assets<- rbind(baseline_assets, quarterly_assets)|>
+  group_by(household_id, visit)|>
   mutate(small_electronics=ifelse(h_hassets1%in%"small electronics"|h_hassets2%in%"small electronics"|h_hassets3%in%"small electronics"|h_hassets1%in%"small electronics", "Yes", "No"),
          large_electronics=ifelse(h_hassets1%in%"Large electronics"|h_hassets2%in%"Large electronics"|h_hassets3%in%"Large electronics"|h_hassets1%in%"Large electronics", "Yes", "No"),
          simple_transport=ifelse(h_hassets1%in%"Simple transport"|h_hassets2%in%"Simple transport"|h_hassets3%in%"Simple transport"|h_hassets1%in%"Simple transport", "Yes", "No"),
-         large_transport=ifelse(h_hassets1%in%"Large transport"|h_hassets2%in%"Large transport"|h_hassets3%in%"Large transport"|h_hassets1%in%"Large transport", "Yes", "No"))%>%
+         large_transport=ifelse(h_hassets1%in%"Large transport"|h_hassets2%in%"Large transport"|h_hassets3%in%"Large transport"|h_hassets1%in%"Large transport", "Yes", "No"))|>
   mutate(finished_floor=ifelse(flrmtrl1%in%"Finished floor"|flrmtrl2%in%"Finished floor"|flrmtrl3%in%"Finished floor", "Yes", "No"),
          natural_floor=ifelse(flrmtrl1%in%"Natural floor"|flrmtrl2%in%"Natural floor"|flrmtrl3%in%"Natural floor", "Yes", "No"),
          rudimentary_floor=ifelse(flrmtrl1%in%"Rudimentary floor"|flrmtrl2%in%"Rudimentary floor"|flrmtrl3%in%"Rudimentary floor", "Yes", "No"),
@@ -377,9 +377,9 @@ assets<- rbind(baseline_assets, quarterly_assets)%>%
          rudimentary_roof=ifelse(roofmtrl1%in%"Rudimentary roofing"|roofmtrl2%in%"Rudimentary roofing"|roofmtrl3%in%"Rudimentary roofing", "Yes", "No"),
          finished_wall=ifelse(extrmtrl1%in%"Finished walls"|extrmtrl2%in%"Finished walls"|extrmtrl3%in%"Finished walls", "Yes", "No"),
          local_wall=ifelse(extrmtrl1%in%"Locally available materials"|extrmtrl2%in%"Locally available materials"|extrmtrl3%in%"Locally available materials", "Yes", "No"),
-         rudimentary_wall=ifelse(extrmtrl1%in%"Rudimentary walls"|extrmtrl2%in%"Rudimentary walls"|extrmtrl3%in%"Rudimentary walls", "Yes", "No"))%>%
+         rudimentary_wall=ifelse(extrmtrl1%in%"Rudimentary walls"|extrmtrl2%in%"Rudimentary walls"|extrmtrl3%in%"Rudimentary walls", "Yes", "No"))|>
   mutate(pit_latrine=ifelse(toiletfclty%in%c("pit latrine", "other"), "Yes", "No"),
-         composting_toilet=ifelse(toiletfclty%in%c("composting toilet", "bucket toilet"), "Yes", "No"))%>%
+         composting_toilet=ifelse(toiletfclty%in%c("composting toilet", "bucket toilet"), "Yes", "No"))|>
   mutate(electricity=ifelse(hhelectrcty%in%"Electricity", "Yes", "No"),
          torch_drycell=ifelse(hhelectrcty%in%"dry cell torch", "Yes", "No"),
          torch_solar=ifelse(hhelectrcty%in%"solar torch", "Yes", "No"),
@@ -388,23 +388,23 @@ assets<- rbind(baseline_assets, quarterly_assets)%>%
          biogas=ifelse(hhelectrcty%in%"Biogas", "Yes", "No"),
          gas_lamp=ifelse(hhelectrcty%in%"Gas lamp", "Yes", "No"),
          lantern=ifelse(hhelectrcty%in%"Paraffin lantern", "Yes", "No"),
-         wood=ifelse(hhelectrcty%in%"Wood", "Yes", "No"))%>%
-  ungroup()%>%
+         wood=ifelse(hhelectrcty%in%"Wood", "Yes", "No"))|>
+  ungroup()|>
   dplyr::select(-h_hassets1, -h_hassets2, -h_hassets3, -h_hassets4, -h_hassets5, -flrmtrl1, -flrmtrl2, -flrmtrl3, -roofmtrl1, -roofmtrl2, -roofmtrl3, -extrmtrl1, -extrmtrl2, -extrmtrl3, -toiletfclty, -hhelectrcty)
   
 
-assets%>%
-  group_by(visit,natural_floor)%>%
-  count()%>%
-  ungroup()%>%
-  group_by(visit)%>%
-  mutate(tot=sum(n))%>%
-  ungroup()%>%
-  mutate(prop=n/tot*100)%>%
+assets|>
+  group_by(visit,natural_floor)|>
+  count()|>
+  ungroup()|>
+  group_by(visit)|>
+  mutate(tot=sum(n))|>
+  ungroup()|>
+  mutate(prop=n/tot*100)|>
   filter(natural_floor%in%"Yes")
 #,wood, small_electronics,large_electronics,simple_transport,large_transport, finished_floor, natural_floor,     rudimentary_floor, improved_roof, local_roof, rudimentary_roof, finished_wall, local_wall, rudimentary_wall, pit_latrine, composting_toilet, electricity,torch_drycell,torch_solar,solar,battery,biogas,gas_lamp,lantern,wood
 
-assets1<- assets%>%
+assets1<- assets|>
   mutate_at(vars(hvephne, wood, small_electronics,large_electronics,simple_transport,large_transport, finished_floor, natural_floor,     rudimentary_floor, improved_roof, local_roof, rudimentary_roof, finished_wall, local_wall, rudimentary_wall, pit_latrine, composting_toilet, electricity,torch_drycell,torch_solar,solar,battery,biogas,gas_lamp,lantern,wood), funs(ifelse(.%in%"Yes", 1, 0)))
 
 library(factoextra)
@@ -434,50 +434,50 @@ scores1$visit<- assets1$visit
 scores1$ses_index1<- round(scores1$ses_index, 3)
 #scores1$income<- ifelse(scores1$ses_index1<(-6.021), "Poorest", ifelse(scores1$ses_index1>-6.020 & scores1$ses_index1<(-2.977), "Second", ifelse(scores1$ses_index1>-2.976 & scores1$ses_index1<(-0.820), "Middle", ifelse(scores1$ses_index1>-0.819 &scores1$ses_index1<3.283, "Forth", "Richest"))))
 
-scores1_v1<- scores1%>%
-  filter(visit==1)%>%
+scores1_v1<- scores1|>
+  filter(visit==1)|>
   mutate(income=ifelse( ses_index1<(-6.019), "Poorest", ifelse( ses_index1>-6.020 & ses_index1<(-0.986), "Second", ifelse( ses_index1>-0.987 & ses_index1<0.469, "Middle", ifelse( ses_index1>0.470 & ses_index1<3.283, "Forth", ifelse( ses_index1>3.282, "Richest", NA))))))
 
-scores1_v3<- scores1%>%
-  filter(visit==3)%>%
+scores1_v3<- scores1|>
+  filter(visit==3)|>
   mutate(income=ifelse(ses_index1<(-6.019), "Poorest", ifelse( ses_index1>-6.020 & ses_index1<(-3.711), "Second", ifelse( ses_index1>-3.712 & ses_index1<(-0.818), "Middle", ifelse( ses_index1>-0.819 & ses_index1<2.657, "Forth", ifelse( ses_index1>2.656, "Richest", NA))))))
 
-scores1_v5<- scores1%>%
-  filter(visit==5)%>%
+scores1_v5<- scores1|>
+  filter(visit==5)|>
   mutate(income=ifelse(ses_index1<(-5.354), "Poorest", ifelse( ses_index1>-5.355 & ses_index1<(-3.711), "Second", ifelse(ses_index1>-3.712 & ses_index1<(-0.950), "Middle", ifelse( ses_index1>-0.951 & ses_index1<1.968, "Forth", ifelse( ses_index1>1.967, "Richest", NA))))))
 
-scores1_v7<- scores1%>%
-  filter(visit==7)%>%
+scores1_v7<- scores1|>
+  filter(visit==7)|>
   mutate(income=ifelse( ses_index1<(-6.019), "Poorest", ifelse(ses_index1>-6.020 & ses_index1<(-3.711), "Second", ifelse( ses_index1>-3.712 & ses_index1<(-0.818), "Middle", ifelse( ses_index1>-0.819 & ses_index1<2.548, "Forth", ifelse( ses_index1>2.547, "Richest", NA))))))
 
-scores1_v9<- scores1%>%
-  filter(visit==9)%>%
+scores1_v9<- scores1|>
+  filter(visit==9)|>
   mutate(income=ifelse(ses_index1<(-6.019), "Poorest", ifelse(ses_index1>-6.020 & ses_index1<(-3.711), "Second", ifelse( ses_index1>-3.712 & ses_index1<(-0.950), "Middle", ifelse( ses_index1>-0.951 & ses_index1<1.206, "Forth", ifelse( ses_index1>1.205, "Richest", NA))))))
 
-scores1_v11<- scores1%>%
-  filter(visit==11)%>%
+scores1_v11<- scores1|>
+  filter(visit==11)|>
   mutate(income=ifelse(ses_index1<(-6.019), "Poorest", ifelse(ses_index1>-6.020 & ses_index1<(-3.711), "Second", ifelse( ses_index1>-3.712 & ses_index1<(-1.517), "Middle", ifelse( ses_index1>-1.518 & ses_index1<0.639, "Forth", ifelse( ses_index1>0.638, "Richest", NA))))))
 
-scores1_v13<- scores1%>%
-  filter(visit==13)%>%
+scores1_v13<- scores1|>
+  filter(visit==13)|>
   mutate(income=ifelse(ses_index1<(-5.354), "Poorest", ifelse(ses_index1>-5.355 & ses_index1<(-3.948), "Second", ifelse( ses_index1>-3.949 & ses_index1<(-0.950), "Middle", ifelse( ses_index1>-0.951 & ses_index1<0.639, "Forth", ifelse( ses_index1>0.638, "Richest", NA))))))
 
-scores1_v15<- scores1%>%
-  filter(visit==15)%>%
+scores1_v15<- scores1|>
+  filter(visit==15)|>
   mutate(income=ifelse(ses_index1<(-5.354), "Poorest", ifelse(ses_index1>-5.355 & ses_index1<(-1.686), "Second", ifelse( ses_index1>-1.687 & ses_index1<(-0.095), "Middle", ifelse( ses_index1>-0.096 & ses_index1<1.246, "Forth", ifelse( ses_index1>1.245, "Richest", NA))))))
 
-scores1a<- rbind(scores1_v1, scores1_v3, scores1_v5, scores1_v7, scores1_v9, scores1_v11, scores1_v13, scores1_v15)%>%
-  group_by(visit, income)%>%
-  mutate(mean_ses=round(mean(ses_index1, na.rm=T), 3))%>%
+scores1a<- rbind(scores1_v1, scores1_v3, scores1_v5, scores1_v7, scores1_v9, scores1_v11, scores1_v13, scores1_v15)|>
+  group_by(visit, income)|>
+  mutate(mean_ses=round(mean(ses_index1, na.rm=T), 3))|>
   ungroup()
 
-v1<- scores1a%>%
-  group_by(income, visit)%>%
-  count()%>%
-  ungroup()%>%
-  group_by(visit)%>%
-  mutate(tot=sum(n))%>%
-  ungroup()%>%
+v1<- scores1a|>
+  group_by(income, visit)|>
+  count()|>
+  ungroup()|>
+  group_by(visit)|>
+  mutate(tot=sum(n))|>
+  ungroup()|>
   mutate(prop=n/tot*100)
 
 ```
@@ -485,65 +485,65 @@ v1<- scores1a%>%
 ```{r}
 ## milking animals 
 
-lct_animals1 <- household_baseline%>%
-  clean_names()%>%
-  #filter(hh_eligible%in%"Yes")%>%
-  mutate(visit=1)%>%
-  # mutate(interview_date=dmy(interview_date)) %>%
-  dplyr::select(interview_date,household_id,cwslactatn,shplactatn,gtslactatn,cmlslactatn, visit)#%>%
+lct_animals1 <- household_baseline|>
+  clean_names()|>
+  #filter(hh_eligible%in%"Yes")|>
+  mutate(visit=1)|>
+  # mutate(interview_date=dmy(interview_date)) |>
+  dplyr::select(interview_date,household_id,cwslactatn,shplactatn,gtslactatn,cmlslactatn, visit)#|>
  
-lct_animals2 <- household_quarterly%>%
-#  filter(hh_eligible%in%"Yes")%>%
-  # mutate(interview_date=dmy(interview_date)) %>%
-  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))%>%
-  dplyr::select(interview_date,household_id,cwslactatn,shplactatn,gtslactatn,cmlslactatn, visit)#%>%
+lct_animals2 <- household_quarterly|>
+#  filter(hh_eligible%in%"Yes")|>
+  # mutate(interview_date=dmy(interview_date)) |>
+  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))|>
+  dplyr::select(interview_date,household_id,cwslactatn,shplactatn,gtslactatn,cmlslactatn, visit)#|>
 
 ## followup
-lct_animals3 <- followup_data%>%
- # filter(hh_eligible%in%"Yes")%>%
- #  mutate(interview_date=dmy(interview_date)) %>%
-  mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))%>%
-  dplyr::select(interview_date,household_id,cwslactatn,shplactatn,gtslactatn,cmlslactatn, visit)#%>%
+lct_animals3 <- followup_data|>
+ # filter(hh_eligible%in%"Yes")|>
+ #  mutate(interview_date=dmy(interview_date)) |>
+  mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))|>
+  dplyr::select(interview_date,household_id,cwslactatn,shplactatn,gtslactatn,cmlslactatn, visit)#|>
 
 ## combine all the data
 
-lct_animals <- lct_animals1%>%
-  rbind(lct_animals2, lct_animals3)%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
- # mutate(interview_date=dmy(interview_date)) %>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  ungroup()%>%
-  gather(c(cwslactatn,shplactatn,gtslactatn,cmlslactatn), key="milking_species", value="milking_animals")%>%
-  mutate(milking_species=recode(milking_species,"cwslactatn"="cattle","shplactatn"="sheep","gtslactatn"="goats","cmlslactatn"="camels"))%>%
-  mutate(milking_animals=as.numeric(milking_animals)) %>%
-  mutate(tlu=ifelse(milking_species%in%"cattle",(milking_animals*1),ifelse(milking_species%in%"camels",(milking_animals*1),(milking_animals*0.1))))%>%
-  # group_by(days_recruitment,household_id,milking_species)%>%
-  # mutate(milking_animals1=round(sum(milking_animals, na.rm=T)))%>%
-  # mutate(tlu1=sum(tlu, na.rm=T))%>%
-  # ungroup()%>%
-  group_by(days_recruitment,household_id)%>%
-  mutate(total_milk_animals=round(sum(milking_animals, na.rm=T)))%>%
-  mutate(total_tlu=sum(tlu, na.rm=T))%>%
-  ungroup()%>%
-  dplyr::select(household_id,total_milk_animals,total_tlu, days_recruitment, visit)%>%
+lct_animals <- lct_animals1|>
+  rbind(lct_animals2, lct_animals3)|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+ # mutate(interview_date=dmy(interview_date)) |>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  ungroup()|>
+  gather(c(cwslactatn,shplactatn,gtslactatn,cmlslactatn), key="milking_species", value="milking_animals")|>
+  mutate(milking_species=recode(milking_species,"cwslactatn"="cattle","shplactatn"="sheep","gtslactatn"="goats","cmlslactatn"="camels"))|>
+  mutate(milking_animals=as.numeric(milking_animals)) |>
+  mutate(tlu=ifelse(milking_species%in%"cattle",(milking_animals*1),ifelse(milking_species%in%"camels",(milking_animals*1),(milking_animals*0.1))))|>
+  # group_by(days_recruitment,household_id,milking_species)|>
+  # mutate(milking_animals1=round(sum(milking_animals, na.rm=T)))|>
+  # mutate(tlu1=sum(tlu, na.rm=T))|>
+  # ungroup()|>
+  group_by(days_recruitment,household_id)|>
+  mutate(total_milk_animals=round(sum(milking_animals, na.rm=T)))|>
+  mutate(total_tlu=sum(tlu, na.rm=T))|>
+  ungroup()|>
+  dplyr::select(household_id,total_milk_animals,total_tlu, days_recruitment, visit)|>
   distinct()
 
 
 
-lct_animals_a <- lct_animals1%>%
-  rbind(lct_animals2, lct_animals3)%>%
-  gather(c(cwslactatn,shplactatn,gtslactatn,cmlslactatn), key="milking_species", value="milking_animals")%>%
-  mutate(milking_species=recode(milking_species,"cwslactatn"="cattle","shplactatn"="sheep","gtslactatn"="goats","cmlslactatn"="camels"))%>%
-  mutate(milking_animals=as.numeric(milking_animals)) %>%
-  mutate(tlu=ifelse(milking_species%in%"cattle",(milking_animals*1),ifelse(milking_species%in%"camels",(milking_animals*1),(milking_animals*0.1))))%>%
- # mutate(interview_date=dmy(interview_date)) %>%
-  mutate(interview_week=floor_date(interview_date, "week"))%>%
-  group_by(interview_week, milking_species)%>%
-  mutate(milking_animals1=sum(milking_animals, na.rm=T))%>%
-  ungroup()%>%
-  dplyr::select(interview_week, milking_species, milking_animals1)%>%
+lct_animals_a <- lct_animals1|>
+  rbind(lct_animals2, lct_animals3)|>
+  gather(c(cwslactatn,shplactatn,gtslactatn,cmlslactatn), key="milking_species", value="milking_animals")|>
+  mutate(milking_species=recode(milking_species,"cwslactatn"="cattle","shplactatn"="sheep","gtslactatn"="goats","cmlslactatn"="camels"))|>
+  mutate(milking_animals=as.numeric(milking_animals)) |>
+  mutate(tlu=ifelse(milking_species%in%"cattle",(milking_animals*1),ifelse(milking_species%in%"camels",(milking_animals*1),(milking_animals*0.1))))|>
+ # mutate(interview_date=dmy(interview_date)) |>
+  mutate(interview_week=floor_date(interview_date, "week"))|>
+  group_by(interview_week, milking_species)|>
+  mutate(milking_animals1=sum(milking_animals, na.rm=T))|>
+  ungroup()|>
+  dplyr::select(interview_week, milking_species, milking_animals1)|>
   distinct()
 
 lct_animals_a$milking_species<- str_to_title(lct_animals_a$milking_species)
@@ -552,10 +552,10 @@ ggplot(lct_animals_a, aes(x=interview_week, y=milking_animals1))+geom_rect(aes(x
 
 #ggsave("animals_milked.png", width=18, height=10)
 ###herd dynamics
-dynamics1 <- household_baseline%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,cowsgft,sheepgfts,goatsgft,cmlsgft,cowsgvnout,sheepgvnout,goatsgvnout,cmlsgvnout,cttlebght,sheepbght,goatsbgh,cmlsbght,cttlesld,sheepsld,goatsld,cmlsold)%>%
-  mutate(visit=1) %>%
+dynamics1 <- household_baseline|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,cowsgft,sheepgfts,goatsgft,cmlsgft,cowsgvnout,sheepgvnout,goatsgvnout,cmlsgvnout,cttlebght,sheepbght,goatsbgh,cmlsbght,cttlesld,sheepsld,goatsld,cmlsold)|>
+  mutate(visit=1) |>
   mutate_at(vars(cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,cowsgft,sheepgfts,goatsgft,cmlsgft,cowsgvnout,sheepgvnout,goatsgvnout,cmlsgvnout,cttlebght,sheepbght,goatsbgh,cmlsbght,cttlesld,sheepsld,goatsld,cmlsold), funs(as.numeric(.)))
   #mutate(cattle_death=colSums(calves_death,cows_death,bulls_death),na.rm=T)
 dynamics1$cattle_out <- rowSums(dynamics1[ , c("calves_death","cows_death","bulls_death","cowsgvnout","cttlesld")],na.rm = T)
@@ -567,14 +567,14 @@ dynamics1$goat_in <- rowSums(dynamics1[ , c("goatsbrth","goatsgft","goatsbgh")],
 dynamics1$camel_out <- rowSums(dynamics1[ , c("camels_death","mcamels_death","fcamels_death","cmlsgvnout","cmlsold")],na.rm = T)
 dynamics1$camel_in <- rowSums(dynamics1[ , c("cmlsbrth","cmlsgft","cmlsbght")],na.rm = T)
 #
-dynamics1 <- dynamics1%>%
+dynamics1 <- dynamics1|>
   dplyr::select(interview_date,household_id,cattle_out,cattle_in,sheep_out,sheep_in,goat_out,goat_in,camel_out,camel_in, visit)
 
-dynamics2 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,cttlebght,sheepbght,goatsbgh,cmlsbght,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)%>%
- # mutate(interview_date=dmy(interview_date)) %>%
-   mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99)))))))) %>%
+dynamics2 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,cttlebght,sheepbght,goatsbgh,cmlsbght,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)|>
+ # mutate(interview_date=dmy(interview_date)) |>
+   mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99)))))))) |>
   mutate_at(vars(contains("death"),contains("givenout"),contains("sold"),contains("brth"), contains("bgh"), contains("gift") ), funs(as.numeric(.)))
   #mutate(cattle_death=colSums(calves_death,cows_death,bulls_death),na.rm=T)
 dynamics2$cattle_out <- rowSums(dynamics2[ , c("calves_death","cows_death","bulls_death","calves_givenout","bulls_givenout","cows_givenout","calves_sold","bulls_sold" ,"cows_sold")],na.rm = T)
@@ -586,13 +586,13 @@ dynamics2$goat_in <- rowSums(dynamics2[ , c("goatsbrth","goats_gifts","mgoats_gi
 dynamics2$camel_out <- rowSums(dynamics2[ , c("camels_death","mcamels_death","fcamels_death","camels_givenout","mcamels_givenout","fcamels_givenout","camels_sold","mcamels_sold","fcamels_sold")],na.rm = T)
 dynamics2$camel_in <- rowSums(dynamics2[ , c("cmlsbrth","camels_gifts","mcamels_gifts","fcamels_gifts","cmlsbght")],na.rm = T)
 #
-dynamics2 <- dynamics2%>%
+dynamics2 <- dynamics2|>
   dplyr::select(interview_date,household_id,cattle_out,cattle_in,sheep_out,sheep_in,goat_out,goat_in,camel_out,camel_in, visit)
 
-dynamics3 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,calves_prchsd,bulls_purchased,cows_purchased,sheep_purchased,msheep_purchased,fsheep_purchased,goats_purchased,mgoats_purchased,fgoats_purchased,camels_purchased,mcamels_purchased,fcamels_purchased,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)%>%
-   mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))%>%
+dynamics3 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,calves_prchsd,bulls_purchased,cows_purchased,sheep_purchased,msheep_purchased,fsheep_purchased,goats_purchased,mgoats_purchased,fgoats_purchased,camels_purchased,mcamels_purchased,fcamels_purchased,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)|>
+   mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))|>
   mutate_at(vars(contains("death"),contains("givenout"),contains("sold"),contains("brth"), contains("bgh"), contains("gift") ), funs(as.numeric(.)))
   #mutate(cattle_death=colSums(calves_death,cows_death,bulls_death),na.rm=T)
 dynamics3$cattle_out <- rowSums(dynamics3[ , c("calves_death","cows_death","bulls_death","calves_givenout","bulls_givenout","cows_givenout","calves_sold","bulls_sold" ,"cows_sold")],na.rm = T)
@@ -604,73 +604,73 @@ dynamics3$goat_in <- rowSums(dynamics3[ , c("goatsbrth","goats_gifts","mgoats_gi
 dynamics3$camel_out <- rowSums(dynamics3[ , c("camels_death","mcamels_death","fcamels_death","camels_givenout","mcamels_givenout","fcamels_givenout","camels_sold","mcamels_sold","fcamels_sold")],na.rm = T)
 dynamics3$camel_in <- rowSums(dynamics3[ , c("cmlsbrth","camels_gifts","mcamels_gifts","fcamels_gifts","camels_purchased","mcamels_purchased","fcamels_purchased")],na.rm = T)
 #
-dynamics3 <- dynamics3%>%
+dynamics3 <- dynamics3|>
   dplyr::select(interview_date,household_id,cattle_out,cattle_in,sheep_out,sheep_in,goat_out,goat_in,camel_out,camel_in,visit)
-dynamics <- rbind(dynamics1,dynamics2,dynamics3)%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  ungroup()%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate_at(vars(cattle_in, cattle_out, sheep_in, sheep_out, goat_in, goat_out, camel_in, camel_out), funs(sum(., na.rm=T)))%>%
-  ungroup()%>%
+dynamics <- rbind(dynamics1,dynamics2,dynamics3)|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  ungroup()|>
+  group_by(household_id, days_recruitment)|>
+  mutate_at(vars(cattle_in, cattle_out, sheep_in, sheep_out, goat_in, goat_out, camel_in, camel_out), funs(sum(., na.rm=T)))|>
+  ungroup()|>
   distinct()
 
 ##livestock ownership (herd structure)
-lvstckown1 <- household_baseline%>%
-  clean_names()%>%
- # filter(hh_eligible%in%"Yes")%>%
-  dplyr::select(interview_date,household_id,calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum,study_arm)%>%
-  pivot_longer(c(calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum), names_to="species_owned", values_to="animals_owned")%>%
-  #mutate(interview_week=floor_date(interview_date,"week"))%>%
-  filter(!is.na(animals_owned))%>%
-  mutate(species_owned=recode(species_owned,"calvsnum"="cattle","bullsnum"="cattle","cowsnum"="cattle","sheep1num"="sheep","shpmlenum"="sheep","shpfmenum"="sheep","goatsnum"="goats","gtsmlenum"="goats","gtsfmlenum"="goats","cmels1num"="camels","cmelsmlenum"="camels","cmelsfmlenum"="camels"))%>%
-  group_by(household_id, species_owned)%>%
-  mutate(animals_owned=sum(as.numeric(animals_owned), na.rm=T))%>%
-  ungroup()%>%
+lvstckown1 <- household_baseline|>
+  clean_names()|>
+ # filter(hh_eligible%in%"Yes")|>
+  dplyr::select(interview_date,household_id,calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum,study_arm)|>
+  pivot_longer(c(calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum), names_to="species_owned", values_to="animals_owned")|>
+  #mutate(interview_week=floor_date(interview_date,"week"))|>
+  filter(!is.na(animals_owned))|>
+  mutate(species_owned=recode(species_owned,"calvsnum"="cattle","bullsnum"="cattle","cowsnum"="cattle","sheep1num"="sheep","shpmlenum"="sheep","shpfmenum"="sheep","goatsnum"="goats","gtsmlenum"="goats","gtsfmlenum"="goats","cmels1num"="camels","cmelsmlenum"="camels","cmelsfmlenum"="camels"))|>
+  group_by(household_id, species_owned)|>
+  mutate(animals_owned=sum(as.numeric(animals_owned), na.rm=T))|>
+  ungroup()|>
   distinct()
   
   
 ## herd dynamics
   
-dynamics1 <- household_baseline%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,cowsgft,sheepgfts,goatsgft,cmlsgft,cowsgvnout,sheepgvnout,goatsgvnout,cmlsgvnout,cttlebght,sheepbght,goatsbgh,cmlsbght,cttlesld,sheepsld,goatsld,cmlsold)#%>%
+dynamics1 <- household_baseline|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,cowsgft,sheepgfts,goatsgft,cmlsgft,cowsgvnout,sheepgvnout,goatsgvnout,cmlsgvnout,cttlebght,sheepbght,goatsbgh,cmlsbght,cttlesld,sheepsld,goatsld,cmlsold)#|>
  
-dynamics2 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,cttlebght,sheepbght,goatsbgh,cmlsbght,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)#%>%
+dynamics2 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,cttlebght,sheepbght,goatsbgh,cmlsbght,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)#|>
   # mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))
   #mutate(cattle_death=colSums(calves_death,cows_death,bulls_death),na.rm=T)
 
-dynamics3 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,calves_prchsd,bulls_purchased,cows_purchased,sheep_purchased,msheep_purchased,fsheep_purchased,goats_purchased,mgoats_purchased,fgoats_purchased,camels_purchased,mcamels_purchased,fcamels_purchased,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)#%>%
+dynamics3 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth,calves_death,cows_death,bulls_death,sheep_death,msheep_death,fsheep_death,goats_death,mgoats_death,fgoats_death,camels_death,mcamels_death,fcamels_death,calves_gift,cows_gifts,bulls_gifts,sheep_gifts,msheep_gifts,fsheep_gifts,goats_gifts,mgoats_gifts,fgoats_gifts,camels_gifts,mcamels_gifts,fcamels_gifts,calves_givenout,bulls_givenout,cows_givenout,sheep_givenout,msheep_givenout,fsheep_givenout,goats_givenout,mgoats_givenout,fgoats_givenout,camels_givenout,mcamels_givenout,fcamels_givenout,calves_prchsd,bulls_purchased,cows_purchased,sheep_purchased,msheep_purchased,fsheep_purchased,goats_purchased,mgoats_purchased,fgoats_purchased,camels_purchased,mcamels_purchased,fcamels_purchased,calves_sold,bulls_sold,cows_sold,sheep_sold,msheep_sold,fsheep_sold,goats_sold,mgoats_sold,fgoats_sold,camels_sold,mcamels_sold,fcamels_sold)#|>
   # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))
   #mutate(cattle_death=colSums(calves_death,cows_death,bulls_death),na.rm=T)
 
-dynamics1a<- dynamics1%>%
-  ungroup()%>%
-  group_by(interview_date, household_id)%>%
+dynamics1a<- dynamics1|>
+  ungroup()|>
+  group_by(interview_date, household_id)|>
   mutate(cattle_death=sum(as.numeric(c(calves_death, cows_death, bulls_death)), na.rm=T),
          sheep_death=sum(as.numeric(c(sheep_death, msheep_death, fsheep_death)), na.rm=T),
          goats_death=sum(as.numeric(c(goats_death, mgoats_death, fgoats_death)), na.rm=T),
-         camels_death=sum(as.numeric(c(camels_death, mcamels_death, fcamels_death)), na.rm=T))%>%
-  ungroup()%>%
+         camels_death=sum(as.numeric(c(camels_death, mcamels_death, fcamels_death)), na.rm=T))|>
+  ungroup()|>
   rename(cattle_birth=cwsbrth, sheep_birth=shpbrth, goats_birth=goatsbrth, camels_birth=cmlsbrth,
          cattle_gifts=cowsgft, sheep_gifts=sheepgfts, goats_gifts=goatsgft, camels_gifts=cmlsgft, 
          cattle_givenout=cowsgvnout, sheep_givenout=sheepgvnout, goats_givenout=goatsgvnout, 
          camels_givenout=cmlsgvnout, cattle_bought=cttlebght, sheep_bought=sheepbght, 
          goats_bought=goatsbgh, camels_bought=cmlsbght, cattle_sold=cttlesld, sheep_sold=sheepsld, 
-         goats_sold=goatsld, camels_sold=cmlsold)%>%
+         goats_sold=goatsld, camels_sold=cmlsold)|>
   dplyr::select(interview_date, household_id, cattle_death, sheep_death, goats_death, camels_death, cattle_birth, sheep_birth, goats_birth, camels_birth,
                 cattle_gifts, sheep_gifts, goats_gifts, camels_gifts, cattle_givenout, sheep_givenout, goats_givenout,
                 camels_givenout, cattle_bought, sheep_bought, goats_bought, camels_bought, cattle_sold, sheep_sold, 
                  goats_sold, camels_sold)
 
-dynamics2a<- dynamics2%>%
-  ungroup()%>%
-  group_by(interview_date, household_id)%>%
+dynamics2a<- dynamics2|>
+  ungroup()|>
+  group_by(interview_date, household_id)|>
   mutate(cattle_death=sum(as.numeric(c(calves_death, cows_death, bulls_death)), na.rm=T),
          sheep_death=sum(as.numeric(c(sheep_death, msheep_death, fsheep_death)), na.rm=T),
          goats_death=sum(as.numeric(c(goats_death, mgoats_death, fgoats_death)), na.rm=T),
@@ -687,19 +687,19 @@ dynamics2a<- dynamics2%>%
          sheep_sold=sum(as.numeric(c(sheep_sold,msheep_sold,fsheep_sold)) , na.rm=T),
          goats_sold=sum(as.numeric(c(goats_sold,mgoats_sold,fgoats_sold)), na.rm=T),
          camels_sold=sum(as.numeric(c(camels_sold,mcamels_sold, fcamels_sold)), na.rm=T)
-         )%>%
-  ungroup()%>%
+         )|>
+  ungroup()|>
   rename(cattle_birth=cwsbrth, sheep_birth=shpbrth, goats_birth=goatsbrth, camels_birth=cmlsbrth,
          cattle_bought=cttlebght, sheep_bought=sheepbght, 
-         goats_bought=goatsbgh, camels_bought=cmlsbght)%>%
+         goats_bought=goatsbgh, camels_bought=cmlsbght)|>
   dplyr::select(interview_date, household_id, cattle_death, sheep_death, goats_death, camels_death, cattle_birth, sheep_birth, goats_birth, camels_birth,
                 cattle_gifts, sheep_gifts, goats_gifts, camels_gifts, cattle_givenout, sheep_givenout, goats_givenout,
                 camels_givenout, cattle_bought, sheep_bought, goats_bought, camels_bought, cattle_sold, sheep_sold, 
                  goats_sold, camels_sold)
 
-dynamics3a<- dynamics3%>%
-  ungroup()%>%
-  group_by(interview_date, household_id)%>%
+dynamics3a<- dynamics3|>
+  ungroup()|>
+  group_by(interview_date, household_id)|>
   mutate(cattle_death=sum(as.numeric(c(calves_death, cows_death, bulls_death)), na.rm=T),
          sheep_death=sum(as.numeric(c(sheep_death, msheep_death, fsheep_death)), na.rm=T),
          goats_death=sum(as.numeric(c(goats_death, mgoats_death, fgoats_death)), na.rm=T),
@@ -720,54 +720,54 @@ dynamics3a<- dynamics3%>%
          sheep_bought=sum(as.numeric(c(sheep_purchased,msheep_purchased,fsheep_purchased)), na.rm=T),
          goats_bought=sum(as.numeric(c(goats_sold,mgoats_sold,fgoats_sold)), na.rm=T),
          camels_bought=sum(as.numeric(c(camels_sold, mcamels_sold,fcamels_sold)), na.rm=T )
-         )%>%
-  ungroup()%>%
+         )|>
+  ungroup()|>
   rename(cattle_birth=cwsbrth, sheep_birth=shpbrth, goats_birth=goatsbrth, camels_birth=cmlsbrth
-          )%>%
+          )|>
   dplyr::select(interview_date, household_id,cattle_death, sheep_death, goats_death, camels_death, cattle_birth, sheep_birth, goats_birth, camels_birth,
                 cattle_gifts, sheep_gifts, goats_gifts, camels_gifts, cattle_givenout, sheep_givenout, goats_givenout,
                 camels_givenout, cattle_bought, sheep_bought, goats_bought, camels_bought, cattle_sold, sheep_sold, 
                  goats_sold, camels_sold)
 
-dynamics_ <- rbind(dynamics1a,dynamics2a,dynamics3a)%>%
+dynamics_ <- rbind(dynamics1a,dynamics2a,dynamics3a)|>
   mutate_at(vars(cattle_death, sheep_death, goats_death, camels_death, cattle_birth, sheep_birth, goats_birth, camels_birth,
                 cattle_gifts, sheep_gifts, goats_gifts, camels_gifts, cattle_givenout, sheep_givenout, goats_givenout,
                 camels_givenout, cattle_bought, sheep_bought, goats_bought, camels_bought, cattle_sold, sheep_sold, 
-                 goats_sold, camels_sold), funs(as.numeric(.)))%>%
+                 goats_sold, camels_sold), funs(as.numeric(.)))|>
   pivot_longer(c(cattle_death, sheep_death, goats_death, camels_death, cattle_birth, sheep_birth, goats_birth, camels_birth,
                 cattle_gifts, sheep_gifts, goats_gifts, camels_gifts, cattle_givenout, sheep_givenout, goats_givenout,
                 camels_givenout, cattle_bought, sheep_bought, goats_bought, camels_bought, cattle_sold, sheep_sold, 
-                 goats_sold, camels_sold), names_to="movement", values_to="movement1")%>%
-  mutate(dyn=ifelse(grepl("death", movement), "Deaths", ifelse(grepl("birth", movement), "Births", ifelse(grepl("gifts", movement), "Gifts (received)", ifelse(grepl("givenout", movement), "Gifts (given out)", ifelse(grepl("bought", movement), "Bought", ifelse(grepl("sold", movement), "Sold", movement)))))))%>%
-  mutate(interview_week=floor_date(interview_date, "week"))%>%
-  group_by(interview_week, movement)%>%
-  mutate(movement1=sum(movement1, na.rm=T))%>%
-  ungroup()%>%
-  dplyr::select(-household_id, -interview_date)%>%
-  distinct()%>%
+                 goats_sold, camels_sold), names_to="movement", values_to="movement1")|>
+  mutate(dyn=ifelse(grepl("death", movement), "Deaths", ifelse(grepl("birth", movement), "Births", ifelse(grepl("gifts", movement), "Gifts (received)", ifelse(grepl("givenout", movement), "Gifts (given out)", ifelse(grepl("bought", movement), "Bought", ifelse(grepl("sold", movement), "Sold", movement)))))))|>
+  mutate(interview_week=floor_date(interview_date, "week"))|>
+  group_by(interview_week, movement)|>
+  mutate(movement1=sum(movement1, na.rm=T))|>
+  ungroup()|>
+  dplyr::select(-household_id, -interview_date)|>
+  distinct()|>
   mutate(movement=ifelse(grepl("cattle", movement), "Cattle", ifelse(grepl("sheep", movement), "Sheep", ifelse(grepl("goats", movement), "Goats", ifelse(grepl("camel", movement), "Camels", movement)))))
   
-dynamics_<- dynamics_%>%
-  mutate(movement1=ifelse(movement%in%"Cattle" & movement1==124, 12, movement1))%>%
-  group_by(interview_week, movement)%>%
-  mutate(tot=sum(movement1, na.rm=T))%>%
-  ungroup()%>%
+dynamics_<- dynamics_|>
+  mutate(movement1=ifelse(movement%in%"Cattle" & movement1==124, 12, movement1))|>
+  group_by(interview_week, movement)|>
+  mutate(tot=sum(movement1, na.rm=T))|>
+  ungroup()|>
   mutate(prop=round(movement1/tot*100))
 
 ggplot(dynamics_, aes(x=interview_week, y=prop, group=dyn, fill=dyn))+geom_rect(aes(xmin=as.Date("2020-08-18"), xmax=as.Date("2020-11-30"), ymin=-Inf, ymax=Inf ), fill="grey50", color=NA)+geom_rect(aes(xmin=as.Date("2021-01-13"), xmax=as.Date("2021-04-30"), ymin=-Inf, ymax=Inf ),fill="grey50", color=NA)+geom_rect(aes(xmin=as.Date("2020-02-08"), xmax=as.Date("2020-05-28"), ymin=-Inf, ymax=Inf),fill="grey50", color=NA)+geom_rect(aes(xmin=as.Date("2021-08-30"), xmax=as.Date("2021-12-01"), ymin=-Inf, ymax=Inf ),fill="grey50", color=NA)+geom_col()+facet_wrap(.~movement, scales = "free_y")+theme_bw()+scale_x_date(date_breaks="4 months", date_labels = "%b-%y")+theme(text=element_text(size=18))+scale_fill_brewer(palette="Set1")+labs(x="Study period", y="Proportion (%)", fill="")
 
 #ggsave("herd_dynamics2a.png", width = 18, height=10)
 
-# lvstckown2 <- dynamics%>%full_join(lvstckown1%>%dplyr::select(-interview_date),by=c("household_id"))%>%distinct()%>%
-#   gather(c(cattle_out:camel_in), key="movement", value="animals_moved")%>%
-#   mutate(dyn=ifelse(grepl("in", movement), "In", "Out"))%>%
-#   mutate(movement=ifelse(grepl("camel", movement), "Camels", ifelse(grepl("cattle", movement), "Cattle", ifelse(grepl("goat", movement), "Goats",ifelse(grepl("sheep", movement), "Sheep", movement)))))%>%
-#   mutate(interview_week=floor_date(interview_date, "week"))%>%
-#   #mutate(visit=1)%>%
-#   group_by(interview_week, study_arm, movement, dyn)%>%
-#   mutate(movement1=sum(animals_moved))%>%
-#   ungroup()%>%
-#   dplyr::select(interview_week, study_arm, movement1, movement, dyn)%>%
+# lvstckown2 <- dynamics|>full_join(lvstckown1|>dplyr::select(-interview_date),by=c("household_id"))|>distinct()|>
+#   gather(c(cattle_out:camel_in), key="movement", value="animals_moved")|>
+#   mutate(dyn=ifelse(grepl("in", movement), "In", "Out"))|>
+#   mutate(movement=ifelse(grepl("camel", movement), "Camels", ifelse(grepl("cattle", movement), "Cattle", ifelse(grepl("goat", movement), "Goats",ifelse(grepl("sheep", movement), "Sheep", movement)))))|>
+#   mutate(interview_week=floor_date(interview_date, "week"))|>
+#   #mutate(visit=1)|>
+#   group_by(interview_week, study_arm, movement, dyn)|>
+#   mutate(movement1=sum(animals_moved))|>
+#   ungroup()|>
+#   dplyr::select(interview_week, study_arm, movement1, movement, dyn)|>
 #   distinct()
 #   
 # ggplot(lvstckown2, aes(x=interview_week, y=movement1, group=dyn, fill=dyn))+geom_col()+facet_wrap(.~movement, scales = "free_y")+theme_bw()+labs(x="Period", y="Count", fill="")+scale_x_date(date_breaks="4 months", date_labels = "%b-%y")+theme(text=element_text(size=16))
@@ -776,501 +776,501 @@ ggplot(dynamics_, aes(x=interview_week, y=prop, group=dyn, fill=dyn))+geom_rect(
 
 
 
-lvstckown3 <- dynamics%>%
-  full_join(lvstckown1%>%dplyr::select(-interview_date),by=c("household_id"))%>%distinct()%>%
-  gather(c(cattle_out:camel_in), key="movement", value="animals_moved")%>%
-  mutate(species_moved=ifelse(movement%in%"camel_in" | movement%in%"camel_out","camels",ifelse(movement%in%"cattle_in" | movement%in%"cattle_out","cattle",ifelse(movement%in%"goat_in" | movement%in%"goat_out","goats","sheep"))))%>%
-  mutate(interview_week=floor_date(interview_date, "week"))%>%
-  group_by(visit, household_id, movement, species_moved)%>%
-  mutate(movement1=sum(animals_moved))%>%
-  ungroup()%>%
-  dplyr::select(visit, household_id, animals_owned,species_owned,movement1, movement, species_moved,)%>%
-  distinct()%>%
-  mutate(movement2=ifelse(grepl("out",movement), "Out", "In"))%>%
-  mutate(species_moved=str_to_title(species_moved))%>%dplyr::select(-movement)
+lvstckown3 <- dynamics|>
+  full_join(lvstckown1|>dplyr::select(-interview_date),by=c("household_id"))|>distinct()|>
+  gather(c(cattle_out:camel_in), key="movement", value="animals_moved")|>
+  mutate(species_moved=ifelse(movement%in%"camel_in" | movement%in%"camel_out","camels",ifelse(movement%in%"cattle_in" | movement%in%"cattle_out","cattle",ifelse(movement%in%"goat_in" | movement%in%"goat_out","goats","sheep"))))|>
+  mutate(interview_week=floor_date(interview_date, "week"))|>
+  group_by(visit, household_id, movement, species_moved)|>
+  mutate(movement1=sum(animals_moved))|>
+  ungroup()|>
+  dplyr::select(visit, household_id, animals_owned,species_owned,movement1, movement, species_moved,)|>
+  distinct()|>
+  mutate(movement2=ifelse(grepl("out",movement), "Out", "In"))|>
+  mutate(species_moved=str_to_title(species_moved))|>dplyr::select(-movement)
 
-lvstckown4 <- lvstckown3%>%
-  group_by(visit, household_id, species_owned, species_moved)%>%
-  mutate(animals_owned=ifelse(movement2%in%"In",(animals_owned+movement1),animals_owned))%>%
-  ungroup()%>%
-  group_by(visit,household_id,species_owned,species_moved)%>%
-  mutate(animals_owned=ifelse(movement2%in%"Out",(animals_owned-movement1),animals_owned))%>%
+lvstckown4 <- lvstckown3|>
+  group_by(visit, household_id, species_owned, species_moved)|>
+  mutate(animals_owned=ifelse(movement2%in%"In",(animals_owned+movement1),animals_owned))|>
+  ungroup()|>
+  group_by(visit,household_id,species_owned,species_moved)|>
+  mutate(animals_owned=ifelse(movement2%in%"Out",(animals_owned-movement1),animals_owned))|>
   ungroup()
   
 
-dynamics_1<- dynamics%>%
-  #dplyr::select(-interview_date)%>%
-  #filter(days_recruitment>)%>%
+dynamics_1<- dynamics|>
+  #dplyr::select(-interview_date)|>
+  #filter(days_recruitment>)|>
   distinct()
   
   
-lvstckown1a <- household_baseline%>%
-  clean_names()%>%
- # filter(hh_eligible%in%"Yes")%>%
-  dplyr::select(interview_date,household_id,calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum,study_arm)%>%
-  gather(c(calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum), key="species_owned", value="animals_owned")%>%
-  #mutate(interview_week=floor_date(interview_date,"week"))%>%
-  #filter(!is.na(animals_owned))%>%
-  mutate(species_owned=recode(species_owned,"calvsnum"="cattle","bullsnum"="cattle","cowsnum"="cattle","sheep1num"="sheep","shpmlenum"="sheep","shpfmenum"="sheep","goatsnum"="goats","gtsmlenum"="goats","gtsfmlenum"="goats","cmels1num"="camels","cmelsmlenum"="camels","cmelsfmlenum"="camels"))%>%
-  group_by(household_id, species_owned)%>%
-  mutate(animals_owned=sum(as.numeric(animals_owned), na.rm=T))%>%
-  ungroup()%>%
-  distinct()%>%
-  pivot_wider(names_from=species_owned, values_from=animals_owned)%>%
-  mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(is.na(.), 0, .)))%>%
+lvstckown1a <- household_baseline|>
+  clean_names()|>
+ # filter(hh_eligible%in%"Yes")|>
+  dplyr::select(interview_date,household_id,calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum,study_arm)|>
+  gather(c(calvsnum,bullsnum,cowsnum,sheep1num,shpmlenum,shpfmenum,goatsnum,gtsmlenum,gtsfmlenum,cmels1num,cmelsmlenum,cmelsfmlenum), key="species_owned", value="animals_owned")|>
+  #mutate(interview_week=floor_date(interview_date,"week"))|>
+  #filter(!is.na(animals_owned))|>
+  mutate(species_owned=recode(species_owned,"calvsnum"="cattle","bullsnum"="cattle","cowsnum"="cattle","sheep1num"="sheep","shpmlenum"="sheep","shpfmenum"="sheep","goatsnum"="goats","gtsmlenum"="goats","gtsfmlenum"="goats","cmels1num"="camels","cmelsmlenum"="camels","cmelsfmlenum"="camels"))|>
+  group_by(household_id, species_owned)|>
+  mutate(animals_owned=sum(as.numeric(animals_owned), na.rm=T))|>
+  ungroup()|>
+  distinct()|>
+  pivot_wider(names_from=species_owned, values_from=animals_owned)|>
+  mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(is.na(.), 0, .)))|>
   dplyr::select(-interview_date)
 
-lvstckown3a <- dynamics_1%>%
-  mutate_at(vars(cattle_in, cattle_out, sheep_out, sheep_in, camel_out, camel_in, goat_out, goat_in), funs(ifelse(days_recruitment==0, 0, .)))%>%
-  full_join(lvstckown1a,by=c("household_id"))%>%distinct()%>%
-  arrange(interview_date)%>%
-  mutate_at(vars(cattle_out, cattle_in,cattle, sheep_out,sheep_in,sheep, goat_in,goat_out,goats,camels, camel_in, camel_out), funs(ifelse(is.na(.), 0, .)))%>%
-  #mutate(visit=ifelse(is.na(visit), 1, visit))%>%
-  group_by( household_id)%>%
-  arrange(interview_date)%>%
- # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==2, dplyr::lag(.), .)))%>%
-  mutate(cattle=abs(cattle-cattle_out+cattle_in))%>%
-  mutate(sheep=abs(sheep-sheep_out+sheep_in))%>%
-  mutate(goats=abs(goats-goat_out+goat_in))%>%
-  mutate(camels=abs(camels-camel_out+camel_in))%>%
-  ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==3, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==3, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==3, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==3, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==3, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==4, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==4, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==4, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==4, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==4, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==5, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==5, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==5, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==5, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==5, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==6, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==6, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==6, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==6, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==6, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==7, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==7, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==7, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==7, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==7, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==8, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==8, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==8, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==8, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==8, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==9, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==9, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==9, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==9, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==9, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==10, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==10, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==10, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==10, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==10, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==11, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==11, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==11, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==11, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==11, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==12, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==12, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==12, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==12, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==12, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==13, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==13, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==13, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==13, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==13, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==14, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==14, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==14, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==14, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==14, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  # group_by( household_id)%>%
-  # arrange(interview_date)%>%
-  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==15, dplyr::lag(.), .)))%>%
-  # mutate(cattle=ifelse(visit==15, cattle-cattle_out+cattle_in, cattle))%>%
-  # mutate(sheep=ifelse(visit==15, sheep-sheep_out+sheep_in, sheep))%>%
-  # mutate(goats=ifelse(visit==15, goats-goat_out+goat_in, goats))%>%
-  # mutate(camels=ifelse(visit==15, camels-camel_out+camel_in, camels))%>%
-  # ungroup()%>%
-  dplyr::select( interview_date, household_id, days_recruitment, study_arm, cattle, sheep, goats, camels)%>%
-  filter(!is.na(cattle))%>%
-  distinct()%>%
+lvstckown3a <- dynamics_1|>
+  mutate_at(vars(cattle_in, cattle_out, sheep_out, sheep_in, camel_out, camel_in, goat_out, goat_in), funs(ifelse(days_recruitment==0, 0, .)))|>
+  full_join(lvstckown1a,by=c("household_id"))|>distinct()|>
+  arrange(interview_date)|>
+  mutate_at(vars(cattle_out, cattle_in,cattle, sheep_out,sheep_in,sheep, goat_in,goat_out,goats,camels, camel_in, camel_out), funs(ifelse(is.na(.), 0, .)))|>
+  #mutate(visit=ifelse(is.na(visit), 1, visit))|>
+  group_by( household_id)|>
+  arrange(interview_date)|>
+ # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==2, dplyr::lag(.), .)))|>
+  mutate(cattle=abs(cattle-cattle_out+cattle_in))|>
+  mutate(sheep=abs(sheep-sheep_out+sheep_in))|>
+  mutate(goats=abs(goats-goat_out+goat_in))|>
+  mutate(camels=abs(camels-camel_out+camel_in))|>
+  ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==3, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==3, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==3, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==3, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==3, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==4, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==4, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==4, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==4, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==4, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==5, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==5, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==5, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==5, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==5, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==6, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==6, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==6, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==6, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==6, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==7, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==7, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==7, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==7, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==7, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==8, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==8, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==8, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==8, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==8, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==9, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==9, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==9, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==9, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==9, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==10, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==10, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==10, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==10, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==10, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==11, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==11, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==11, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==11, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==11, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==12, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==12, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==12, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==12, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==12, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==13, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==13, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==13, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==13, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==13, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==14, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==14, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==14, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==14, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==14, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  # group_by( household_id)|>
+  # arrange(interview_date)|>
+  # mutate_at(vars(cattle, sheep, goats, camels), funs(ifelse(visit==15, dplyr::lag(.), .)))|>
+  # mutate(cattle=ifelse(visit==15, cattle-cattle_out+cattle_in, cattle))|>
+  # mutate(sheep=ifelse(visit==15, sheep-sheep_out+sheep_in, sheep))|>
+  # mutate(goats=ifelse(visit==15, goats-goat_out+goat_in, goats))|>
+  # mutate(camels=ifelse(visit==15, camels-camel_out+camel_in, camels))|>
+  # ungroup()|>
+  dplyr::select( interview_date, household_id, days_recruitment, study_arm, cattle, sheep, goats, camels)|>
+  filter(!is.na(cattle))|>
+  distinct()|>
   mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))
   
-lvstckown4 <- lvstckown3%>%
-  group_by(visit, household_id, species_owned, species_moved)%>%
-  mutate(animals_owned=ifelse(movement2%in%"In",(animals_owned+movement1),animals_owned))%>%
-  ungroup()%>%
-  group_by(visit,household_id,species_owned,species_moved)%>%
-  mutate(animals_owned=ifelse(movement2%in%"Out",(animals_owned-movement1),animals_owned))%>%
+lvstckown4 <- lvstckown3|>
+  group_by(visit, household_id, species_owned, species_moved)|>
+  mutate(animals_owned=ifelse(movement2%in%"In",(animals_owned+movement1),animals_owned))|>
+  ungroup()|>
+  group_by(visit,household_id,species_owned,species_moved)|>
+  mutate(animals_owned=ifelse(movement2%in%"Out",(animals_owned-movement1),animals_owned))|>
   ungroup()
  
 
 ########
 ### births
 #####
-births1 <- household_baseline%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth) %>%
+births1 <- household_baseline|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth) |>
   mutate_at(vars(cwsbrth,shpbrth,goatsbrth,cmlsbrth), funs(as.numeric(.)))
   #mutate(visit=1)
   #mutate(cattle_death=colSums(calves_death,cows_death,bulls_death),na.rm=T)
 births1$no_births <- rowSums(births1[ , c("cwsbrth","shpbrth","goatsbrth","cmlsbrth")],na.rm = T)
 
-births2 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth)%>%
+births2 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth)|>
   mutate_at(vars(cwsbrth,shpbrth,goatsbrth,cmlsbrth), funs(as.numeric(.)))
 
 births2$no_births <- rowSums(births2[ , c("cwsbrth","shpbrth","goatsbrth","cmlsbrth")],na.rm = T)
 
-births3 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth)%>%
+births3 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,cwsbrth,shpbrth,goatsbrth,cmlsbrth)|>
   mutate_at(vars(cwsbrth,shpbrth,goatsbrth,cmlsbrth), funs(as.numeric(.)))
 
 births3$no_births <- rowSums(births3[ , c("cwsbrth","shpbrth","goatsbrth","cmlsbrth")],na.rm = T)
 
-births <- rbind(births1,births2,births3)%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  ungroup()%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate_at(vars(no_births), funs(sum(., na.rm=T)))%>%
-  ungroup()%>%
+births <- rbind(births1,births2,births3)|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  ungroup()|>
+  group_by(household_id, days_recruitment)|>
+  mutate_at(vars(no_births), funs(sum(., na.rm=T)))|>
+  ungroup()|>
   distinct()
 
 #write_csv(births, "l4h_births.csv")
 
 ##disease event frequency
-animal_sick1 <- household_baseline%>%
-  clean_names()%>%
- # filter(hh_eligible%in%"Yes")%>%
-  dplyr::select(interview_date,household_id,anmlsick)%>%
-  filter(!is.na(anmlsick))%>%
- # mutate(visit=1)%>%
+animal_sick1 <- household_baseline|>
+  clean_names()|>
+ # filter(hh_eligible%in%"Yes")|>
+  dplyr::select(interview_date,household_id,anmlsick)|>
+  filter(!is.na(anmlsick))|>
+ # mutate(visit=1)|>
   dplyr::select(interview_date, household_id, anmlsick)
-animal_sick2 <- household_quarterly%>%
-  dplyr::select(interview_date,household_id,anmlsick)%>%
-  filter(!is.na(anmlsick))%>%
- # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))%>%
- # dplyr::select(-interview_date)%>%
+animal_sick2 <- household_quarterly|>
+  dplyr::select(interview_date,household_id,anmlsick)|>
+  filter(!is.na(anmlsick))|>
+ # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))|>
+ # dplyr::select(-interview_date)|>
   distinct()
 
 
-animal_sick3 <- followup_data%>%
-  #filter(hh_eligible%in%"Yes")%>%
-  rename(anmlsick=form_anmlsick) %>%
-  dplyr::select(interview_date,household_id,anmlsick)%>%
-  filter(!is.na(anmlsick))%>%
-#mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))%>%
-  #dplyr::select(-interview_date)%>%
+animal_sick3 <- followup_data|>
+  #filter(hh_eligible%in%"Yes")|>
+  rename(anmlsick=form_anmlsick) |>
+  dplyr::select(interview_date,household_id,anmlsick)|>
+  filter(!is.na(anmlsick))|>
+#mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))|>
+  #dplyr::select(-interview_date)|>
   distinct()
-animal_sick <- animal_sick1%>%
-  rbind(animal_sick2, animal_sick3)%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  ungroup()%>%
-  mutate(anmlsick=ifelse(anmlsick%in%"Yes", 1, 0))%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate(anmlsick=max(anmlsick, na.rm=T))%>%
-  ungroup()%>%
-  distinct()%>%
+animal_sick <- animal_sick1|>
+  rbind(animal_sick2, animal_sick3)|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  ungroup()|>
+  mutate(anmlsick=ifelse(anmlsick%in%"Yes", 1, 0))|>
+  group_by(household_id, days_recruitment)|>
+  mutate(anmlsick=max(anmlsick, na.rm=T))|>
+  ungroup()|>
+  distinct()|>
   mutate(anmlsick=recode(anmlsick, "1"="Yes", "0"="No"))
-  #mutate(interview_week=floor_date(interview_date,"week"))%>%
+  #mutate(interview_week=floor_date(interview_date,"week"))|>
   #dplyr::select(-interview_date)
 
 ##number animals sick
-sick_animals1 <- household_baseline%>%
-  clean_names()%>%
+sick_animals1 <- household_baseline|>
+  clean_names()|>
   dplyr::select(interview_date,household_id,sickcttle,sickgts,sickshp,sickcmls)
 
-sick_animals2 <- household_quarterly%>%
-  clean_names()%>%
+sick_animals2 <- household_quarterly|>
+  clean_names()|>
   dplyr::select(interview_date,household_id,sickcttle,sickgts,sickshp,sickcmls)
 
 names(followup_data)<- gsub("form_", "",names(followup_data))
-sick_animals3 <- followup_data%>%
-  clean_names()%>%
+sick_animals3 <- followup_data|>
+  clean_names()|>
   dplyr::select(interview_date,household_id,sickcttle,sickgts,sickshp,sickcmls)
 
-sick_animals <- sick_animals1%>%
-  rbind(sick_animals2, sick_animals3)%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  ungroup()%>%
-  gather(c(sickcttle,sickgts,sickshp,sickcmls), key="sick_species", value="sick_animals")%>%
-  filter(!is.na(sick_animals))%>%
-  mutate(sick_species=recode(sick_species,"sickcttle"="cattle","sickshp"="sheep","sickgts"="goats","sickcmls"="camels"))%>%
-  mutate(sick_animals=as.numeric(sick_animals)) %>%
-  mutate(tlu=ifelse(sick_species%in%"cattle",(sick_animals*1),ifelse(sick_species%in%"camels",(sick_animals*1),(sick_animals*0.1))))%>%
-  group_by(days_recruitment,household_id,sick_species)%>%
-  mutate(sick_animals=round(sum(sick_animals)))%>%
-  mutate(tlu=sum(tlu))%>%
-  ungroup()%>%
-  group_by(days_recruitment,household_id)%>%
-  mutate(total_sick_animals=round(sum(sick_animals)))%>%
-  mutate(total_tlu=sum(tlu))%>%
-  ungroup()%>%
-  dplyr::select(household_id,total_tlu, days_recruitment)%>%
+sick_animals <- sick_animals1|>
+  rbind(sick_animals2, sick_animals3)|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  ungroup()|>
+  gather(c(sickcttle,sickgts,sickshp,sickcmls), key="sick_species", value="sick_animals")|>
+  filter(!is.na(sick_animals))|>
+  mutate(sick_species=recode(sick_species,"sickcttle"="cattle","sickshp"="sheep","sickgts"="goats","sickcmls"="camels"))|>
+  mutate(sick_animals=as.numeric(sick_animals)) |>
+  mutate(tlu=ifelse(sick_species%in%"cattle",(sick_animals*1),ifelse(sick_species%in%"camels",(sick_animals*1),(sick_animals*0.1))))|>
+  group_by(days_recruitment,household_id,sick_species)|>
+  mutate(sick_animals=round(sum(sick_animals)))|>
+  mutate(tlu=sum(tlu))|>
+  ungroup()|>
+  group_by(days_recruitment,household_id)|>
+  mutate(total_sick_animals=round(sum(sick_animals)))|>
+  mutate(total_tlu=sum(tlu))|>
+  ungroup()|>
+  dplyr::select(household_id,total_tlu, days_recruitment)|>
   distinct()
 
-sick_animals2 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,sickcttle,sickgts,sickshp,sickcmls)%>%
-  gather(c(sickcttle,sickgts,sickshp,sickcmls), key="sick_species", value="sick_animals")%>%
-  mutate(interview_week=floor_date(interview_date,"week"))%>%
-  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))%>%
-  filter(!is.na(sick_animals))%>%
-  mutate(sick_species=recode(sick_species,"sickcttle"="cattle","sickshp"="sheep","sickgts"="goats","sickcmls"="camels"))%>%
-  mutate(tlu=ifelse(sick_species%in%"cattle",(sick_animals*1),ifelse(sick_species%in%"camels",(sick_animals*1),(sick_animals*0.1))))%>%
-  group_by(visit,household_id,sick_species)%>%
-  mutate(sick_animals=round(sum(sick_animals)))%>%
-  mutate(tlu=sum(tlu))%>%
-  ungroup()%>%
-  group_by(visit,household_id)%>%
-  mutate(total_sick_animals=round(sum(sick_animals)))%>%
-  mutate(total_sicktlu=sum(tlu))%>%
-  ungroup()%>%
-  dplyr::select(household_id,total_sicktlu, visit)%>%
+sick_animals2 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,sickcttle,sickgts,sickshp,sickcmls)|>
+  gather(c(sickcttle,sickgts,sickshp,sickcmls), key="sick_species", value="sick_animals")|>
+  mutate(interview_week=floor_date(interview_date,"week"))|>
+  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))|>
+  filter(!is.na(sick_animals))|>
+  mutate(sick_species=recode(sick_species,"sickcttle"="cattle","sickshp"="sheep","sickgts"="goats","sickcmls"="camels"))|>
+  mutate(tlu=ifelse(sick_species%in%"cattle",(sick_animals*1),ifelse(sick_species%in%"camels",(sick_animals*1),(sick_animals*0.1))))|>
+  group_by(visit,household_id,sick_species)|>
+  mutate(sick_animals=round(sum(sick_animals)))|>
+  mutate(tlu=sum(tlu))|>
+  ungroup()|>
+  group_by(visit,household_id)|>
+  mutate(total_sick_animals=round(sum(sick_animals)))|>
+  mutate(total_sicktlu=sum(tlu))|>
+  ungroup()|>
+  dplyr::select(household_id,total_sicktlu, visit)|>
   distinct()
 
-# sick_animals3 <- individual_followup%>%
-#   clean_names()%>%
-#   filter(hh_eligible%in%"Yes")%>%
-#   dplyr::select(interview_date,household_id,sickcttle,sickgts,sickshp,sickcmls)%>%
-#   gather(c(sickcttle,sickgts,sickshp,sickcmls), key="sick_species", value="sick_animals")%>%
-#   mutate(interview_week=floor_date(interview_date,"week"))%>%
-#   mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))%>%
-#   filter(!is.na(sick_animals))%>%
-#   mutate(sick_species=recode(sick_species,"sickcttle"="cattle","sickshp"="sheep","sickgts"="goats","sickcmls"="camels"))%>%
-#   mutate(tlu=ifelse(sick_species%in%"cattle",(sick_animals*1),ifelse(sick_species%in%"camels",(sick_animals*1),(sick_animals*0.1))))%>%
-#   group_by(visit,household_id,sick_species)%>%
-#   mutate(sick_animals=round(sum(sick_animals)))%>%
-#   mutate(tlu=sum(tlu))%>%
-#   ungroup()%>%
-#   group_by(visit,household_id)%>%
-#   mutate(total_sick_animals=round(sum(sick_animals)))%>%
-#   mutate(total_tlu=sum(tlu))%>%
-#   ungroup()%>%
-#   dplyr::select(household_id,total_tlu, visit)%>%
+# sick_animals3 <- individual_followup|>
+#   clean_names()|>
+#   filter(hh_eligible%in%"Yes")|>
+#   dplyr::select(interview_date,household_id,sickcttle,sickgts,sickshp,sickcmls)|>
+#   gather(c(sickcttle,sickgts,sickshp,sickcmls), key="sick_species", value="sick_animals")|>
+#   mutate(interview_week=floor_date(interview_date,"week"))|>
+#   mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))|>
+#   filter(!is.na(sick_animals))|>
+#   mutate(sick_species=recode(sick_species,"sickcttle"="cattle","sickshp"="sheep","sickgts"="goats","sickcmls"="camels"))|>
+#   mutate(tlu=ifelse(sick_species%in%"cattle",(sick_animals*1),ifelse(sick_species%in%"camels",(sick_animals*1),(sick_animals*0.1))))|>
+#   group_by(visit,household_id,sick_species)|>
+#   mutate(sick_animals=round(sum(sick_animals)))|>
+#   mutate(tlu=sum(tlu))|>
+#   ungroup()|>
+#   group_by(visit,household_id)|>
+#   mutate(total_sick_animals=round(sum(sick_animals)))|>
+#   mutate(total_tlu=sum(tlu))|>
+#   ungroup()|>
+#   dplyr::select(household_id,total_tlu, visit)|>
 #   distinct()
-# sick_animals <- sick_animals1%>%
-#   rbind(sick_animals2, sick_animals3)%>%
-#   rename(sick_tlu=total_tlu)%>%
+# sick_animals <- sick_animals1|>
+#   rbind(sick_animals2, sick_animals3)|>
+#   rename(sick_tlu=total_tlu)|>
 #   distinct()
 
 ##animal abortions
-abortions1 <- household_baseline%>%
-  clean_names()%>%
+abortions1 <- household_baseline|>
+  clean_names()|>
   dplyr::select(interview_date,household_id,abortnscttle,abrtngts,abrtnshp,abrtncmls)
 
-abortions2 <- household_quarterly%>%
-  clean_names()%>%
+abortions2 <- household_quarterly|>
+  clean_names()|>
   dplyr::select(interview_date,household_id,abortnscttle,abrtngts,abrtnshp,abrtncmls)
   
-abortions3 <- followup_data%>%
-  clean_names()%>%
+abortions3 <- followup_data|>
+  clean_names()|>
   dplyr::select(interview_date,household_id,abortnscttle,abrtngts,abrtnshp,abrtncmls)
 
-abortions <- abortions1%>%
-  rbind(abortions2, abortions3)%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  ungroup()%>%
-  gather(c(abortnscttle,abrtngts,abrtnshp,abrtncmls), key="species_aborted", value="number_aborted")%>%
-  mutate(interview_week=floor_date(interview_date,"week"))%>%
-  filter(!is.na(number_aborted))%>%
-  mutate(species_aborted=recode(species_aborted,"abortnscttle"="cattle","abrtnshp"="sheep","abrtngts"="goats","abrtncmls"="camels"))%>%
-  mutate(number_aborted=as.numeric(number_aborted)) %>%
-  mutate(tlu=ifelse(species_aborted%in%"cattle",(number_aborted*1),ifelse(species_aborted%in%"camels",(number_aborted*1),(number_aborted*0.1))))%>%
-  group_by(days_recruitment,household_id,species_aborted)%>%
-  mutate(number_aborted=round(sum(number_aborted)))%>%
-  mutate(tlu=sum(tlu))%>%
-  ungroup()%>%
-  group_by(days_recruitment,household_id)%>%
-  mutate(total_number_aborted=round(sum(number_aborted)))%>%
-  mutate(aborted_tlu=sum(tlu))%>%
-  ungroup()%>%
-  dplyr::select(days_recruitment, household_id,aborted_tlu)%>%
+abortions <- abortions1|>
+  rbind(abortions2, abortions3)|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  ungroup()|>
+  gather(c(abortnscttle,abrtngts,abrtnshp,abrtncmls), key="species_aborted", value="number_aborted")|>
+  mutate(interview_week=floor_date(interview_date,"week"))|>
+  filter(!is.na(number_aborted))|>
+  mutate(species_aborted=recode(species_aborted,"abortnscttle"="cattle","abrtnshp"="sheep","abrtngts"="goats","abrtncmls"="camels"))|>
+  mutate(number_aborted=as.numeric(number_aborted)) |>
+  mutate(tlu=ifelse(species_aborted%in%"cattle",(number_aborted*1),ifelse(species_aborted%in%"camels",(number_aborted*1),(number_aborted*0.1))))|>
+  group_by(days_recruitment,household_id,species_aborted)|>
+  mutate(number_aborted=round(sum(number_aborted)))|>
+  mutate(tlu=sum(tlu))|>
+  ungroup()|>
+  group_by(days_recruitment,household_id)|>
+  mutate(total_number_aborted=round(sum(number_aborted)))|>
+  mutate(aborted_tlu=sum(tlu))|>
+  ungroup()|>
+  dplyr::select(days_recruitment, household_id,aborted_tlu)|>
   distinct()
 
 
 
 ##vet intervention frequency
-vet_freq1 <- household_baseline%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,trtaniml)%>%
+vet_freq1 <- household_baseline|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,trtaniml)|>
   filter(!is.na(trtaniml))
 
-vet_freq2 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,trtaniml)%>%
-  filter(!is.na(trtaniml))#%>%
+vet_freq2 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,trtaniml)|>
+  filter(!is.na(trtaniml))#|>
   # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))
 
-vet_freq3 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,trtaniml)%>%
-  filter(!is.na(trtaniml))#%>%
+vet_freq3 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,trtaniml)|>
+  filter(!is.na(trtaniml))#|>
   # mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))
-vet_freq <- vet_freq1%>%
-  rbind(vet_freq2, vet_freq3)%>%
-  distinct()%>%
-  mutate(trtaniml=ifelse(trtaniml%in%"Yes", 1, 0))%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  dplyr::select(-interview_date)%>%
-  ungroup()%>%
-  group_by(days_recruitment, household_id)%>%
-  mutate(trtaniml=max(trtaniml, na.rm=T))%>%
-  ungroup()%>%
-  distinct()%>%
+vet_freq <- vet_freq1|>
+  rbind(vet_freq2, vet_freq3)|>
+  distinct()|>
+  mutate(trtaniml=ifelse(trtaniml%in%"Yes", 1, 0))|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  dplyr::select(-interview_date)|>
+  ungroup()|>
+  group_by(days_recruitment, household_id)|>
+  mutate(trtaniml=max(trtaniml, na.rm=T))|>
+  ungroup()|>
+  distinct()|>
   mutate(trtaniml=ifelse(trtaniml%in%1, "Yes", "No"))
 
 #write_csv(vet_freq, "l4h_vet_frequency.csv")
 ##grazing distance
-grazedist1 <- household_baseline%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,grazedist)%>%
+grazedist1 <- household_baseline|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,grazedist)|>
   filter(!is.na(grazedist))
 
-grazedist2 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,grazedist)%>%
-  filter(!is.na(grazedist))#%>%
+grazedist2 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,grazedist)|>
+  filter(!is.na(grazedist))#|>
  # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))
 
-grazedist3 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,grazedist)%>%
-  filter(!is.na(grazedist))%>%
-  #mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))%>%
+grazedist3 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,grazedist)|>
+  filter(!is.na(grazedist))|>
+  #mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))|>
   mutate(grazedist=recode(grazedist, "1"="Below 1 km", "2"="1-5 km", "3"="5-10km", "4"="More than 10 km", "5"="migration"))
 
-grazedist <- grazedist1%>%
-  rbind(grazedist2, grazedist3)%>%
-  distinct()%>%
-  mutate(grazedist=recode(grazedist,"Below 1 km"= "1", "1-5 km"="2", "5-10km"="3", "More than 10 km"="4", "migration"="5"))%>%
-  mutate(grazedist=as.numeric(grazedist))%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  dplyr::select(-interview_date)%>%
-  ungroup()%>%
-  group_by(days_recruitment, household_id)%>%
-  mutate(grazedist=max(grazedist, na.rm=T))%>%
-  ungroup()%>%
-  distinct()%>%
+grazedist <- grazedist1|>
+  rbind(grazedist2, grazedist3)|>
+  distinct()|>
+  mutate(grazedist=recode(grazedist,"Below 1 km"= "1", "1-5 km"="2", "5-10km"="3", "More than 10 km"="4", "migration"="5"))|>
+  mutate(grazedist=as.numeric(grazedist))|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  dplyr::select(-interview_date)|>
+  ungroup()|>
+  group_by(days_recruitment, household_id)|>
+  mutate(grazedist=max(grazedist, na.rm=T))|>
+  ungroup()|>
+  distinct()|>
   mutate(grazedist=recode(grazedist, "1"="Below 1 km", "2"="1-5 km", "3"="5-10km", "4"="More than 10 km", "5"="migration"))
 
 ##rcvd fds
-hh_rcvd_fd1 <- household_baseline%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,rcvdfds, fdsrc1)%>%
-  mutate(fdscr_project=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%"provided by project", 1, 0))%>%
-  mutate(fdscr_other=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%c("bought", "other", "provided by neighbor/family"), 1, 0))%>%
-  filter(!is.na(rcvdfds))%>%
-  dplyr::select(-fdsrc1)%>%
+hh_rcvd_fd1 <- household_baseline|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,rcvdfds, fdsrc1)|>
+  mutate(fdscr_project=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%"provided by project", 1, 0))|>
+  mutate(fdscr_other=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%c("bought", "other", "provided by neighbor/family"), 1, 0))|>
+  filter(!is.na(rcvdfds))|>
+  dplyr::select(-fdsrc1)|>
   distinct()
 
 
-hh_rcvd_fd2 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,rcvdfds, fdsrc1)%>%
-  mutate(fdscr_project=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%"provided by project", 1, 0))%>%
-  mutate(fdscr_other=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%c("provided by neighbor/family", "other"), 1, 0))%>%
-  filter(!is.na(rcvdfds))%>%
-  dplyr::select(-fdsrc1)%>%
-  distinct()#%>%
-#  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))%>%
-  #dplyr::select(-interview_date)%>%
+hh_rcvd_fd2 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,rcvdfds, fdsrc1)|>
+  mutate(fdscr_project=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%"provided by project", 1, 0))|>
+  mutate(fdscr_other=ifelse(rcvdfds%in%"Yes" & fdsrc1%in%c("provided by neighbor/family", "other"), 1, 0))|>
+  filter(!is.na(rcvdfds))|>
+  dplyr::select(-fdsrc1)|>
+  distinct()#|>
+#  mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))|>
+  #dplyr::select(-interview_date)|>
   #distinct()
 
-hh_rcvd_fd3 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,rcvdfds, fdsrc)%>%
-  mutate(fdscr_project=ifelse(rcvdfds%in%"Yes" & fdsrc%in%"2", 1, 0))%>%
-  mutate(fdscr_other=ifelse(rcvdfds%in%"Yes" & fdsrc%in%c("3", "4"), 1, 0))%>%
-  filter(!is.na(rcvdfds))%>%
-  dplyr::select(-fdsrc)%>%
+hh_rcvd_fd3 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,rcvdfds, fdsrc)|>
+  mutate(fdscr_project=ifelse(rcvdfds%in%"Yes" & fdsrc%in%"2", 1, 0))|>
+  mutate(fdscr_other=ifelse(rcvdfds%in%"Yes" & fdsrc%in%c("3", "4"), 1, 0))|>
+  filter(!is.na(rcvdfds))|>
+  dplyr::select(-fdsrc)|>
   distinct()
- # mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))%>%
- # dplyr::select(-interview_date)%>%
+ # mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))|>
+ # dplyr::select(-interview_date)|>
  # distinct()
   
 
-rcvd_fds <- hh_rcvd_fd1%>%
-  rbind(hh_rcvd_fd2, hh_rcvd_fd3)%>%
-  distinct()%>%
-  mutate(rcvdfds=ifelse(rcvdfds%in%"Yes", 1, 0))%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  dplyr::select(-interview_date)%>%
-  ungroup()%>%
-  group_by(days_recruitment, household_id)%>%
-  mutate(rcvdfds=max(rcvdfds, na.rm=T))%>%
-  mutate(fdscr_project=max(fdscr_project, na.rm=T))%>%
-  mutate(fdscr_other=max(fdscr_other, na.rm=T))%>%
-  ungroup()%>%
-  distinct()%>%
+rcvd_fds <- hh_rcvd_fd1|>
+  rbind(hh_rcvd_fd2, hh_rcvd_fd3)|>
+  distinct()|>
+  mutate(rcvdfds=ifelse(rcvdfds%in%"Yes", 1, 0))|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  dplyr::select(-interview_date)|>
+  ungroup()|>
+  group_by(days_recruitment, household_id)|>
+  mutate(rcvdfds=max(rcvdfds, na.rm=T))|>
+  mutate(fdscr_project=max(fdscr_project, na.rm=T))|>
+  mutate(fdscr_other=max(fdscr_other, na.rm=T))|>
+  ungroup()|>
+  distinct()|>
   mutate(rcvdfds=ifelse(rcvdfds%in%1, "Yes", "No"))
 
 #write_csv(rcvd_fds, "l4h_rcvdfds.csv")
@@ -1283,237 +1283,237 @@ rcvd_fds <- hh_rcvd_fd1%>%
   #1   1   1   1   1  11
   
 ##household illness
-hh_sick1 <- household_baseline%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,hhmmbrsick)%>%
+hh_sick1 <- household_baseline|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,hhmmbrsick)|>
   filter(!is.na(hhmmbrsick))
 
-hh_sick2 <- household_quarterly%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,hhmmbrsick)%>%
-  filter(!is.na(hhmmbrsick))#%>%
- # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))%>%
-  #dplyr::select(-interview_date)%>%
+hh_sick2 <- household_quarterly|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,hhmmbrsick)|>
+  filter(!is.na(hhmmbrsick))#|>
+ # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))|>
+  #dplyr::select(-interview_date)|>
   #distinct()
   
-hh_sick3 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,hhmmbrsick)%>%
-  filter(!is.na(hhmmbrsick))%>%
- # mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))%>%
- # dplyr::select(-interview_date)%>%
-  mutate(hhmmbrsick=recode(hhmmbrsick, "1"="Yes", "0"="No", "2"="Don't know"))%>%
+hh_sick3 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,hhmmbrsick)|>
+  filter(!is.na(hhmmbrsick))|>
+ # mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))|>
+ # dplyr::select(-interview_date)|>
+  mutate(hhmmbrsick=recode(hhmmbrsick, "1"="Yes", "0"="No", "2"="Don't know"))|>
   distinct()
 
-hh_sick <- hh_sick1%>%
-  rbind(hh_sick2, hh_sick3)%>%
-  mutate(hhmmbrsick=recode(hhmmbrsick, "Don't know"="No"))%>%
-  distinct()%>%
-  mutate(hhmmbrsick=ifelse(hhmmbrsick%in%"Yes", 1, 0))%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  dplyr::select(-interview_date)%>%
-  ungroup()%>%
-  group_by(days_recruitment, household_id)%>%
-  mutate(hhmmbrsick=max(hhmmbrsick, na.rm=T))%>%
-  ungroup()%>%
-  distinct()%>%
+hh_sick <- hh_sick1|>
+  rbind(hh_sick2, hh_sick3)|>
+  mutate(hhmmbrsick=recode(hhmmbrsick, "Don't know"="No"))|>
+  distinct()|>
+  mutate(hhmmbrsick=ifelse(hhmmbrsick%in%"Yes", 1, 0))|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  dplyr::select(-interview_date)|>
+  ungroup()|>
+  group_by(days_recruitment, household_id)|>
+  mutate(hhmmbrsick=max(hhmmbrsick, na.rm=T))|>
+  ungroup()|>
+  distinct()|>
   mutate(hhmmbrsick=ifelse(hhmmbrsick%in%1, "Yes", "No"))
  
 #write_csv(hh_sick, "l4h_hh_sick.csv") 
 ### average milk yield: species
 #milk:baseline
-household_bl1 <- household_baseline%>%
+household_bl1 <- household_baseline|>
   dplyr::select(interview_date,household_id,village,cwslactatn, shplactatn,gtslactatn,cmlslactatn, cows_litres,sheep_litres,goats_litres,camels_litres, dtefdprvdd)
 
 #milk:followup
-followup_bl1 <- followup_data%>%
-  clean_names()%>%
-  dplyr::select(interview_date,household_id,village,cwslactatn, shplactatn,gtslactatn,cmlslactatn,cows_litres,sheep_litres,goats_litres,camels_litres, dtefdprvdd)#%>%
-  #rename(dtefdprvdd=form_dtefdprvdd)%>%
+followup_bl1 <- followup_data|>
+  clean_names()|>
+  dplyr::select(interview_date,household_id,village,cwslactatn, shplactatn,gtslactatn,cmlslactatn,cows_litres,sheep_litres,goats_litres,camels_litres, dtefdprvdd)#|>
+  #rename(dtefdprvdd=form_dtefdprvdd)|>
  # mutate(visit=ifelse(interview_date<as.Date("2020-01-16"), 2, ifelse(interview_date>as.Date("2020-01-16") & interview_date<as.Date("2020-04-03"), 4, ifelse(interview_date>as.Date("2020-05-01") & interview_date<as.Date("2020-07-28"), 6, ifelse(interview_date>as.Date("2020-09-10") & interview_date<as.Date("2020-10-28"), 8, ifelse(interview_date>as.Date("2021-01-05") & interview_date<as.Date("2021-02-25"), 10, ifelse(interview_date>as.Date("2021-02-25") & interview_date<as.Date("2021-07-07"), 12, ifelse(interview_date>as.Date("2021-08-17"), 14, 99))))))))
-household_q1 <- household_quarterly%>%
-  dplyr::select(interview_date,household_id,village,cwslactatn, shplactatn,gtslactatn,cmlslactatn,cows_litres,sheep_litres,goats_litres,camels_litres,dtefdprvdd)#%>%
+household_q1 <- household_quarterly|>
+  dplyr::select(interview_date,household_id,village,cwslactatn, shplactatn,gtslactatn,cmlslactatn,cows_litres,sheep_litres,goats_litres,camels_litres,dtefdprvdd)#|>
  # mutate(visit=ifelse(interview_date<as.Date("2020-02-15"), 3, ifelse(interview_date>as.Date("2020-04-05") & interview_date<as.Date("2020-05-20"), 5, ifelse(interview_date>as.Date("2020-05-20") & interview_date<as.Date("2020-09-12"), 7, ifelse(interview_date>as.Date("2020-09-13") & interview_date<as.Date("2020-12-16"), 9, ifelse(interview_date>as.Date("2021-02-24") & interview_date<as.Date("2021-04-23"), 11, ifelse(interview_date>as.Date("2021-06-13") & interview_date<as.Date("2021-08-25"), 13, ifelse(interview_date>as.Date("2021-10-11"), 15, 99))))))))
-household_comb <- household_bl1%>%
-  rbind(household_q1%>%mutate(dtefdprvdd=NA), followup_bl1)%>%
+household_comb <- household_bl1|>
+  rbind(household_q1|>mutate(dtefdprvdd=NA), followup_bl1)|>
   mutate(study_arm=ifelse(village%in%c("Lependera","Gobb Arbelle", "Nahgan-ngusa","Sulate", "Saale-Sambakah", "Namarei", "Manyatta Lengima","Lokoshula", "TubchaDakhane", "Rengumo-Gargule"), "Intervention arm 1", ifelse(village%in%c("Galthelian-Torrder", "Uyam  village", "Galthelan Elemo", "Nebey", "Rongumo_kurkum", "Urawen_Kurkum", "Eisimatacho", "Manyatta K.A.G", "Ltepes Ooodo", "Lorokushu", "Marti", "Manyatta Juu West/East", "Lbaarok1"), "Intervention arm 2","Control arm")))
 
 ###check ward arms
-# wards <- households_baseline2%>%
-#   dplyr::select(ward,village)%>%
-#   mutate(study_arm=ifelse(village%in%c("Lependera","Gobb Arbelle", "Nahgan-ngusa","Sulate", "Saale-Sambakah", "Namarei", "Manyatta Lengima","Lokoshula", "TubchaDakhane", "Rengumo-Gargule"), "Intervention arm 1", ifelse(village%in%c("Galthelian-Torrder", "Uyam  village", "Galthelan Elemo", "Nebey", "Rongumo_kurkum", "Urawen_Kurkum", "Eisimatacho", "Manyatta K.A.G", "Ltepes Ooodo", "Lorokushu", "Marti", "Manyatta Juu West/East", "Lbaarok1"), "Intervention arm 2","Control arm")))%>%
+# wards <- households_baseline2|>
+#   dplyr::select(ward,village)|>
+#   mutate(study_arm=ifelse(village%in%c("Lependera","Gobb Arbelle", "Nahgan-ngusa","Sulate", "Saale-Sambakah", "Namarei", "Manyatta Lengima","Lokoshula", "TubchaDakhane", "Rengumo-Gargule"), "Intervention arm 1", ifelse(village%in%c("Galthelian-Torrder", "Uyam  village", "Galthelan Elemo", "Nebey", "Rongumo_kurkum", "Urawen_Kurkum", "Eisimatacho", "Manyatta K.A.G", "Ltepes Ooodo", "Lorokushu", "Marti", "Manyatta Juu West/East", "Lbaarok1"), "Intervention arm 2","Control arm")))|>
 #   distinct()
 
-xx<- household_baseline%>%clean_names()%>%
-  dplyr::select(interview_date,household_id,hhpple, h_hoccuptn1, hhead, cshtrnsfrprog1,h_heducation)%>%
-  group_by(household_id)%>%
+xx<- household_baseline|>clean_names()|>
+  dplyr::select(interview_date,household_id,hhpple, h_hoccuptn1, hhead, cshtrnsfrprog1,h_heducation)|>
+  group_by(household_id)|>
   dplyr::slice(1L)
 ### milk yield
-hh_milk<- distinct(household_comb)%>%
-  #dplyr::select(-interview_date)%>%
-  distinct()%>%
-  left_join(xx, by=c("household_id", "interview_date"))%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  #mutate(interview_week=floor_date(interview_date,"week"))%>%
-  pivot_longer(c(cows_litres, sheep_litres, camels_litres, goats_litres), names_to="animals_ltrs", values_to="animal_litres")%>%
-  pivot_longer(c(cwslactatn, shplactatn,gtslactatn,cmlslactatn), names_to="spcs", values_to="species1")%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate(animal_litres=as.numeric(animal_litres)) %>%
-  mutate(total_litres= sum(animal_litres, na.rm=T))%>%
-  mutate(hhpple=max(hhpple))%>%
-  ungroup()%>%
-  #group_by(household_id, days_recruitment, animals_ltrs)%>%
-  #mutate(total_litres_anim= sum(animal_litres, na.rm=T))%>%
-  #ungroup()%>%
-  dplyr::select(household_id,hhpple,study_arm,animals_ltrs, total_litres,animal_litres, dtefdprvdd,  species1, h_hoccuptn1, hhead, cshtrnsfrprog1, days_recruitment, interview_date, h_heducation)%>%
-  filter(!(is.na(animal_litres)))%>%
-  separate(animals_ltrs, into = c("species","ltrs"),sep = "_")%>%
-  dplyr::select(household_id,hhpple,study_arm,total_litres,animal_litres, dtefdprvdd,   h_hoccuptn1, hhead, cshtrnsfrprog1, days_recruitment, interview_date, h_heducation, species)%>%
-  mutate(dtefdprvdd=ifelse(is.na(dtefdprvdd), 1, 0))%>%
-  ungroup()%>%
-  distinct()%>%
- # mutate(spcs=recode(spcs, "cwslactatn"="Cows", "shplactatn"="Sheep","gtslactatn"="Goats","cmlslactatn"="Camels"))%>%
+hh_milk<- distinct(household_comb)|>
+  #dplyr::select(-interview_date)|>
+  distinct()|>
+  left_join(xx, by=c("household_id", "interview_date"))|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  #mutate(interview_week=floor_date(interview_date,"week"))|>
+  pivot_longer(c(cows_litres, sheep_litres, camels_litres, goats_litres), names_to="animals_ltrs", values_to="animal_litres")|>
+  pivot_longer(c(cwslactatn, shplactatn,gtslactatn,cmlslactatn), names_to="spcs", values_to="species1")|>
+  group_by(household_id, days_recruitment)|>
+  mutate(animal_litres=as.numeric(animal_litres)) |>
+  mutate(total_litres= sum(animal_litres, na.rm=T))|>
+  mutate(hhpple=max(hhpple))|>
+  ungroup()|>
+  #group_by(household_id, days_recruitment, animals_ltrs)|>
+  #mutate(total_litres_anim= sum(animal_litres, na.rm=T))|>
+  #ungroup()|>
+  dplyr::select(household_id,hhpple,study_arm,animals_ltrs, total_litres,animal_litres, dtefdprvdd,  species1, h_hoccuptn1, hhead, cshtrnsfrprog1, days_recruitment, interview_date, h_heducation)|>
+  filter(!(is.na(animal_litres)))|>
+  separate(animals_ltrs, into = c("species","ltrs"),sep = "_")|>
+  dplyr::select(household_id,hhpple,study_arm,total_litres,animal_litres, dtefdprvdd,   h_hoccuptn1, hhead, cshtrnsfrprog1, days_recruitment, interview_date, h_heducation, species)|>
+  mutate(dtefdprvdd=ifelse(is.na(dtefdprvdd), 1, 0))|>
+  ungroup()|>
+  distinct()|>
+ # mutate(spcs=recode(spcs, "cwslactatn"="Cows", "shplactatn"="Sheep","gtslactatn"="Goats","cmlslactatn"="Camels"))|>
   distinct()
 #write_csv(hh_milk,"l4h_hh_milk.csv") 
 
-hh_milk1 <- hh_milk%>%
-  mutate(interview_week=floor_date(interview_date, "week"))%>%
-  mutate(season= ifelse(interview_week<as.Date("2020-02-08"), "Season 1", ifelse(interview_week>as.Date("2020-02-07") & interview_week<as.Date("2020-05-29"), "Season 2- (Dry)", ifelse(interview_week>as.Date("2020-05-28") & interview_week<as.Date("2020-08-19"), "Season 3", ifelse(interview_week>as.Date("2020-08-18") & interview_week<as.Date("2020-12-01"), "Season 4 (Dry)", ifelse(interview_week>as.Date("2020-11-29") & interview_week<as.Date("2021-01-13"), "Season 5", ifelse(interview_week>as.Date("2021-01-12") & interview_week<as.Date("2021-05-01"),"Season 6 (Dry)", ifelse(interview_week>as.Date("2021-04-30") & interview_week<as.Date("2021-08-30"), "Season 7", "Season 8-(Dry)"))))))))%>%
-  group_by(season, household_id)%>%
-  mutate(feeds_date1=min(dtefdprvdd))%>%
-  mutate(feeds_date2=feeds_date1+90)%>%
-  mutate(feeds_date3=ifelse(is.na(feeds_date1), "No", "Yes"))%>%
-  group_by(season,household_id)%>%
-  mutate(total_milk=sum(animal_litres))%>%
-  ungroup()%>%
-  distinct(interview_week,household_id,hhpple,study_arm,animal_litres,total_milk, season)%>%
-  mutate(treatment=ifelse(study_arm%in%"Control arm", "No", "Yes"))%>%
-  group_by(season,study_arm)%>%
-  mutate(avrg_milk=mean(total_milk,na.rm=T))%>%
-  ungroup()%>%
+hh_milk1 <- hh_milk|>
+  mutate(interview_week=floor_date(interview_date, "week"))|>
+  mutate(season= ifelse(interview_week<as.Date("2020-02-08"), "Season 1", ifelse(interview_week>as.Date("2020-02-07") & interview_week<as.Date("2020-05-29"), "Season 2- (Dry)", ifelse(interview_week>as.Date("2020-05-28") & interview_week<as.Date("2020-08-19"), "Season 3", ifelse(interview_week>as.Date("2020-08-18") & interview_week<as.Date("2020-12-01"), "Season 4 (Dry)", ifelse(interview_week>as.Date("2020-11-29") & interview_week<as.Date("2021-01-13"), "Season 5", ifelse(interview_week>as.Date("2021-01-12") & interview_week<as.Date("2021-05-01"),"Season 6 (Dry)", ifelse(interview_week>as.Date("2021-04-30") & interview_week<as.Date("2021-08-30"), "Season 7", "Season 8-(Dry)"))))))))|>
+  group_by(season, household_id)|>
+  mutate(feeds_date1=min(dtefdprvdd))|>
+  mutate(feeds_date2=feeds_date1+90)|>
+  mutate(feeds_date3=ifelse(is.na(feeds_date1), "No", "Yes"))|>
+  group_by(season,household_id)|>
+  mutate(total_milk=sum(animal_litres))|>
+  ungroup()|>
+  distinct(interview_week,household_id,hhpple,study_arm,animal_litres,total_milk, season)|>
+  mutate(treatment=ifelse(study_arm%in%"Control arm", "No", "Yes"))|>
+  group_by(season,study_arm)|>
+  mutate(avrg_milk=mean(total_milk,na.rm=T))|>
+  ungroup()|>
   mutate(study_arm=recode(study_arm, "1"="Intervention arm 1 (feeds)", "2"="Intervention arm 2 (feeds+ counselling)", "3"="Control arm"))
 
 
-# hh_milk1a<- hh_milk%>%
-#   mutate(species=str_to_title(species))%>%
-#   group_by( visit, household_id)%>%
-#   mutate(species2= ifelse(species==spcs, species1, NA))%>%
-#   ungroup()%>%
-#   dplyr::select(-species1, -spcs)%>%
-#   distinct()%>%
-#   filter(!is.na(species2))%>%
-#   group_by(household_id, visit, species)%>%
-#   mutate(animal_litres=sum(animal_litres, na.rm=T))%>%
-#   #mutate(species2=mean(species2, na.rm=T))%>%
-#   mutate(average=animal_litres/species2, na.rm=T)%>%
-#   ungroup()%>%
-#   dplyr::select(household_id,hhpple,study_arm, interview_week,species, animal_litres, average, visit)%>%
+# hh_milk1a<- hh_milk|>
+#   mutate(species=str_to_title(species))|>
+#   group_by( visit, household_id)|>
+#   mutate(species2= ifelse(species==spcs, species1, NA))|>
+#   ungroup()|>
+#   dplyr::select(-species1, -spcs)|>
+#   distinct()|>
+#   filter(!is.na(species2))|>
+#   group_by(household_id, visit, species)|>
+#   mutate(animal_litres=sum(animal_litres, na.rm=T))|>
+#   #mutate(species2=mean(species2, na.rm=T))|>
+#   mutate(average=animal_litres/species2, na.rm=T)|>
+#   ungroup()|>
+#   dplyr::select(household_id,hhpple,study_arm, interview_week,species, animal_litres, average, visit)|>
 #    mutate(season= ifelse(interview_week<as.Date("2020-02-08"), "Season 1", ifelse(interview_week>as.Date("2020-02-07") & interview_week<as.Date("2020-05-29"), "Season 2- (Dry)", ifelse(interview_week>as.Date("2020-05-28") & interview_week<as.Date("2020-08-19"), "Season 3", ifelse(interview_week>as.Date("2020-08-18") & interview_week<as.Date("2020-12-01"), "Season 4 (Dry)", ifelse(interview_week>as.Date("2020-11-29") & interview_week<as.Date("2021-01-13"), "Season 5", ifelse(interview_week>as.Date("2021-01-12") & interview_week<as.Date("2021-05-01"),"Season 6 (Dry)", ifelse(interview_week>as.Date("2021-04-30") & interview_week<as.Date("2021-08-30"), "Season 7", "Season 8-(Dry)"))))))))
 
 #write_csv(hh_milk1,"milk_yield.csv")
-ses_data<- scores1a%>%
-  dplyr::select(household_id, visit, income)%>%
+ses_data<- scores1a|>
+  dplyr::select(household_id, visit, income)|>
   distinct()
 
-ses_data1<- ses_data%>%
-  mutate(visit=visit+1)%>%
+ses_data1<- ses_data|>
+  mutate(visit=visit+1)|>
   filter(visit<15)
 
 ses_data2<- rbind(ses_data, ses_data1)
-rs<- ses_data%>%
-  group_by(household_id, visit, income)%>%
+rs<- ses_data|>
+  group_by(household_id, visit, income)|>
   count()
 #write_csv(ses_data2, "ses_scores.csv")
 ## nutritional_counselling
 
-nutr1<- mother_baseline%>%
+nutr1<- mother_baseline|>
   dplyr::select(interview_date,household_id, nutrtn_cnslng, tms_nutrcouns)
 
-xx<- followup_data %>%
+xx<- followup_data |>
   select(number, household_id, interview_date)
 
 mother_followup<- left_join(mother_followup, xx, by="number")
-nutr2 <- mother_followup%>%
-  dplyr::select(interview_date,household_id,nutrtn_cnslng, tms_nutrcouns)#%>%
- # mutate(nut_counseling= recode(nutrtn_cnslng,"1"="Yes", "0"="No"))%>%
-#  mutate(interview_week=floor_date(interview_date,"week"))%>%
+nutr2 <- mother_followup|>
+  dplyr::select(interview_date,household_id,nutrtn_cnslng, tms_nutrcouns)#|>
+ # mutate(nut_counseling= recode(nutrtn_cnslng,"1"="Yes", "0"="No"))|>
+#  mutate(interview_week=floor_date(interview_date,"week"))|>
  # dplyr::select(-interview_date,-nutrtn_cnslng)
-nutr3 <- mother_quarterly%>%
-  dplyr::select(interview_date,household_id,nutrtn_cnslng, tms_nutrcouns)#%>%
- # mutate(nut_counseling= recode(nutrtn_cnslng,"1"="Yes", "0"="No"))%>%
-#  mutate(interview_week=floor_date(interview_date,"week"))%>%
+nutr3 <- mother_quarterly|>
+  dplyr::select(interview_date,household_id,nutrtn_cnslng, tms_nutrcouns)#|>
+ # mutate(nut_counseling= recode(nutrtn_cnslng,"1"="Yes", "0"="No"))|>
+#  mutate(interview_week=floor_date(interview_date,"week"))|>
  # dplyr::select(-interview_date,-nutrtn_cnslng)
-nutr <- rbind(nutr1,nutr2,nutr3)%>%
-  group_by(household_id)%>%
-  arrange(interview_date)%>%
-  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))%>%
-  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))%>%
-  ungroup()%>%
-  mutate(village=str_sub(household_id, 5,6))%>%
-  mutate(study_arm=ifelse(village%in%c("LP","GA", "NN","SL", "SS", "NM", "ML","LK", "TD", "RG"), "Intervention arm 1", ifelse(village%in%c("GT", "UY", "GE", "NB", "RK", "UK", "ES", "MK", "LO", "LR", "MR", "MJ", "LB"), "Intervention arm 2","Control arm")))%>%
-  mutate(normal_counseling=ifelse(study_arm%in%c("Intervention arm 1", "Control arm") & tms_nutrcouns>0, 1,0))%>%
-  mutate(normal_counseling=ifelse(study_arm%in%c("Intervention arm 1", "Control arm") & is.na(normal_counseling), 0, normal_counseling))%>%
-  mutate(enhanced_counseling=ifelse(study_arm%in%"Intervention arm 2" & tms_nutrcouns>2, 1, 0))%>%
-  mutate(tms_nutrcouns=ifelse(normal_counseling==1 & tms_nutrcouns>2, 2, tms_nutrcouns))%>%
-  mutate(tms_nutrcouns=ifelse(tms_nutrcouns==(-2), 2, tms_nutrcouns))%>%
+nutr <- rbind(nutr1,nutr2,nutr3)|>
+  group_by(household_id)|>
+  arrange(interview_date)|>
+  mutate(days_recruitment=interview_date-dplyr::lag(interview_date))|>
+  mutate(days_recruitment=ifelse(is.na(days_recruitment), 0, days_recruitment))|>
+  ungroup()|>
+  mutate(village=str_sub(household_id, 5,6))|>
+  mutate(study_arm=ifelse(village%in%c("LP","GA", "NN","SL", "SS", "NM", "ML","LK", "TD", "RG"), "Intervention arm 1", ifelse(village%in%c("GT", "UY", "GE", "NB", "RK", "UK", "ES", "MK", "LO", "LR", "MR", "MJ", "LB"), "Intervention arm 2","Control arm")))|>
+  mutate(normal_counseling=ifelse(study_arm%in%c("Intervention arm 1", "Control arm") & tms_nutrcouns>0, 1,0))|>
+  mutate(normal_counseling=ifelse(study_arm%in%c("Intervention arm 1", "Control arm") & is.na(normal_counseling), 0, normal_counseling))|>
+  mutate(enhanced_counseling=ifelse(study_arm%in%"Intervention arm 2" & tms_nutrcouns>2, 1, 0))|>
+  mutate(tms_nutrcouns=ifelse(normal_counseling==1 & tms_nutrcouns>2, 2, tms_nutrcouns))|>
+  mutate(tms_nutrcouns=ifelse(tms_nutrcouns==(-2), 2, tms_nutrcouns))|>
   dplyr::select(-village, -nutrtn_cnslng, -interview_date)
 
   
 
 
 ###dataset for model
-obj1_data <- lvstckown3a%>%dplyr::select(household_id, cattle, sheep, goats, camels, days_recruitment)%>%mutate(days_recruitment=as.numeric(days_recruitment))%>%left_join(hh_milk%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)), by=c("days_recruitment","household_id"))%>%mutate_at(vars(cattle, sheep, goats, camels), funs(abs(.)))
-obj1_data <- obj1_data%>%left_join(lct_animals%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))%>%rename(milk_tlu=total_tlu)
-obj1_data <- obj1_data%>%left_join(ses_data,by=c("visit","household_id"))
-obj1_data <- obj1_data%>%left_join(animal_sick%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
-obj1_data <- obj1_data%>%left_join(sick_animals%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))%>%rename(sick_tlu=total_tlu)
-obj1_data <- obj1_data%>%left_join(abortions%>%mutate(days_recruitment=as.numeric(days_recruitment))%>%distinct(),by=c("days_recruitment","household_id"))
-obj1_data <- obj1_data%>%left_join(vet_freq%>%mutate(days_recruitment=as.numeric(days_recruitment))%>%distinct(),by=c("days_recruitment","household_id"))
-obj1_data <- obj1_data%>%left_join(grazedist%>%mutate(days_recruitment=as.numeric(days_recruitment))%>%distinct(),by=c("days_recruitment","household_id"))
-obj1_data <- obj1_data%>%left_join(rcvd_fds%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
-obj1_data <- obj1_data%>%left_join(hh_sick%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
-obj1_data <- obj1_data%>%left_join(nutr%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
+obj1_data <- lvstckown3a|>dplyr::select(household_id, cattle, sheep, goats, camels, days_recruitment)|>mutate(days_recruitment=as.numeric(days_recruitment))|>left_join(hh_milk|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)), by=c("days_recruitment","household_id"))|>mutate_at(vars(cattle, sheep, goats, camels), funs(abs(.)))
+obj1_data <- obj1_data|>left_join(lct_animals|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))|>rename(milk_tlu=total_tlu)
+obj1_data <- obj1_data|>left_join(ses_data,by=c("visit","household_id"))
+obj1_data <- obj1_data|>left_join(animal_sick|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
+obj1_data <- obj1_data|>left_join(sick_animals|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))|>rename(sick_tlu=total_tlu)
+obj1_data <- obj1_data|>left_join(abortions|>mutate(days_recruitment=as.numeric(days_recruitment))|>distinct(),by=c("days_recruitment","household_id"))
+obj1_data <- obj1_data|>left_join(vet_freq|>mutate(days_recruitment=as.numeric(days_recruitment))|>distinct(),by=c("days_recruitment","household_id"))
+obj1_data <- obj1_data|>left_join(grazedist|>mutate(days_recruitment=as.numeric(days_recruitment))|>distinct(),by=c("days_recruitment","household_id"))
+obj1_data <- obj1_data|>left_join(rcvd_fds|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
+obj1_data <- obj1_data|>left_join(hh_sick|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
+obj1_data <- obj1_data|>left_join(nutr|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
 
-obj1_data <- obj1_data%>%left_join(births%>%distinct()%>%mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
-#obj1_data<- obj1_data%>%left_join(hh_milk1a%>%dplyr::select(species, household_id, days_recruitment,average)%>%mutate(days_recruitment=as.numeric(days_recruitment)), by=c("days_recruitment","household_id"))%>%distinct()%>%
- # mutate(species=recode(species, "Camels"="camels_milk", "Cows"="cows_milk", "Goats"="goats_milk", "Sheep"="sheep_milk"))%>%
-#  pivot_wider(names_from=species,values_from = average )%>%
-#  distinct()%>%
+obj1_data <- obj1_data|>left_join(births|>distinct()|>mutate(days_recruitment=as.numeric(days_recruitment)),by=c("days_recruitment","household_id"))
+#obj1_data<- obj1_data|>left_join(hh_milk1a|>dplyr::select(species, household_id, days_recruitment,average)|>mutate(days_recruitment=as.numeric(days_recruitment)), by=c("days_recruitment","household_id"))|>distinct()|>
+ # mutate(species=recode(species, "Camels"="camels_milk", "Cows"="cows_milk", "Goats"="goats_milk", "Sheep"="sheep_milk"))|>
+#  pivot_wider(names_from=species,values_from = average )|>
+#  distinct()|>
 #  unnest()
 
 
-# obj1_data<- obj1_data%>%
-#   mutate_at(vars(total_litres, camels_milk, goats_milk, sheep_milk, cows_milk, hhpple), funs(ifelse(is.na(.), 0,.)))%>%
-#   group_by(household_id, days_recruitment)%>%
-#   mutate_at(vars(total_litres, cattle, sheep, goats, camels,  camels_milk, goats_milk, sheep_milk, cows_milk, hhpple), funs(max(., na.rm=T)))%>%
-#   #mutate(study_arm=ifelse(is.na(study_arm), dplyr::lag(study_arm), study_arm))%>%
-#   #mutate(hhmmbrsick=ifelse(hhmmbrsick%in%"Yes", "Yes", "No"))%>%
-#   ungroup()%>%
-#   dplyr::select(-grazedist)%>%
+# obj1_data<- obj1_data|>
+#   mutate_at(vars(total_litres, camels_milk, goats_milk, sheep_milk, cows_milk, hhpple), funs(ifelse(is.na(.), 0,.)))|>
+#   group_by(household_id, days_recruitment)|>
+#   mutate_at(vars(total_litres, cattle, sheep, goats, camels,  camels_milk, goats_milk, sheep_milk, cows_milk, hhpple), funs(max(., na.rm=T)))|>
+#   #mutate(study_arm=ifelse(is.na(study_arm), dplyr::lag(study_arm), study_arm))|>
+#   #mutate(hhmmbrsick=ifelse(hhmmbrsick%in%"Yes", "Yes", "No"))|>
+#   ungroup()|>
+#   dplyr::select(-grazedist)|>
 #   distinct()
 
 
   #mutate(grazedist=recode(grazedist, "1"="Below 1 km", "2"="1-5 km", "3"="5-10km", "4"="More than 10 km", "5"="migration"))
 
-obj1_data<- obj1_data%>%
-  #dplyr::select(-interview_date)%>%
-  mutate(village=str_sub(household_id, 5,6))%>%
-  mutate(study_arm=ifelse(village%in%c("LP","GA", "NN","SL", "SS", "NM", "ML","LK", "TD", "RG"), "Intervention arm 1", ifelse(village%in%c("GT", "UY", "GE", "NB", "RK", "UK", "ES", "MK", "LO", "LR", "MR", "MJ", "LB"), "Intervention arm 2", "Control arm")))%>%
-  dplyr::select(-village)%>%
-  distinct()%>%
-  mutate(dtefdprvdd=ifelse(is.na(dtefdprvdd), 0, dtefdprvdd))%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate(dtefdprvdd=max(dtefdprvdd, na.rm=T))%>%
-  ungroup()%>%
-  distinct()%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate(tlu=sum(cattle+camels+(sheep/10)+(goats/10)))%>%
+obj1_data<- obj1_data|>
+  #dplyr::select(-interview_date)|>
+  mutate(village=str_sub(household_id, 5,6))|>
+  mutate(study_arm=ifelse(village%in%c("LP","GA", "NN","SL", "SS", "NM", "ML","LK", "TD", "RG"), "Intervention arm 1", ifelse(village%in%c("GT", "UY", "GE", "NB", "RK", "UK", "ES", "MK", "LO", "LR", "MR", "MJ", "LB"), "Intervention arm 2", "Control arm")))|>
+  dplyr::select(-village)|>
+  distinct()|>
+  mutate(dtefdprvdd=ifelse(is.na(dtefdprvdd), 0, dtefdprvdd))|>
+  group_by(household_id, days_recruitment)|>
+  mutate(dtefdprvdd=max(dtefdprvdd, na.rm=T))|>
+  ungroup()|>
+  distinct()|>
+  group_by(household_id, days_recruitment)|>
+  mutate(tlu=sum(cattle+camels+(sheep/10)+(goats/10)))|>
   dplyr::select(household_id, days_recruitment, total_litres, study_arm, hhpple, h_hoccuptn1, hhead, cshtrnsfrprog1, total_milk_animals, milk_tlu,sick_tlu,  grazedist, rcvdfds, hhmmbrsick, tlu , fdscr_other, fdscr_project, h_hoccuptn1, h_heducation, normal_counseling , enhanced_counseling, tms_nutrcouns, trtaniml, income, no_births  )
   
 
@@ -1523,7 +1523,7 @@ obj1_data<- obj1_data%>%
 
 ###set parameter references
 obj1_data$study_arm <- fct_relevel(obj1_data$study_arm, "Control arm")
-obj1_data$anmlsick <- fct_relevel(obj1_data$anmlsick, "No")
+#obj1_data$anmlsick <- fct_relevel(obj1_data$anmlsick, "No")
 obj1_data$trtaniml <- fct_relevel(obj1_data$trtaniml, "No")
 obj1_data$grazedist <- fct_relevel(obj1_data$grazedist, "migration")
 obj1_data$rcvdfds <- fct_relevel(obj1_data$rcvdfds, "No")
@@ -1532,8 +1532,8 @@ obj1_data$hhmmbrsick <- fct_relevel(obj1_data$hhmmbrsick, "Yes")
 #obj1_data$season<- fct_relevel(obj1_data$season, "Non-dry")
 
 ###convert milk to litres
-#obj1_data <- obj1_data%>%
-  #mutate(total_milk1=(total_milk/1000))%>%
+#obj1_data <- obj1_data|>
+  #mutate(total_milk1=(total_milk/1000))|>
   #mutate(animal_litres1=animal_litres/1000)
 #obj1_data$total_milk1 <- as.numeric(obj1_data$total_milk1)
 
@@ -1541,45 +1541,46 @@ obj1_data$hhmmbrsick <- fct_relevel(obj1_data$hhmmbrsick, "Yes")
 #hist(obj1_data$total_milk1) #positively/right skewed. Therefore, negbinomial model
 
 ###subset
-#obj1_data1 <- obj1_data%>%
+#obj1_data1 <- obj1_data|>
   #filter(!study_arm=="Intervention arm 1")
 #obj1_data1$study_arm <- factor(obj1_data1$study_arm)
 #obj1_data1 <- within(obj1_data1,study_arm <- relevel(study_arm,ref= "Intervention arm 2"))
-# data2<- obj1_data%>%
+# data2<- obj1_data|>
 #   filter(study_arm%in%c("Intervention arm 1", "Intervention arm 2"))
 
 ### panel data
 
-# obj1_data<- obj1_data%>%
-#   dplyr::select( -rcvdfds, -hhmmbrsick, -anmlsick, -trtaniml)%>%
+# obj1_data<- obj1_data|>
+#   dplyr::select( -rcvdfds, -hhmmbrsick, -anmlsick, -trtaniml)|>
 #   distinct()
 obj1_data$days_recruitment<- ifelse(is.na(obj1_data$days_recruitment), 0, obj1_data$days_recruitment)
 
-obj1_data<- obj1_data%>%
-  mutate(h_hoccuptn1=ifelse(h_hoccuptn1%in%"Livestock herding", 1, 2))%>%
-  mutate(hhead=ifelse(hhead%in%"Yes", 1, 0))%>%
-  mutate(cshtrnsfrprog1=ifelse(cshtrnsfrprog1%in%"None", 1, 0))%>%
-  mutate(grazedist=recode(grazedist,"Below 1 km"= "1", "1-5 km"="2", "5-10km"="3", "More than 10 km"="4", "migration"="5"))%>%
-  mutate(grazedist=as.numeric(grazedist))%>%
-  mutate(rcvdfds=ifelse(rcvdfds%in%"Yes", 1, 0))%>%
-  mutate(hhmmbrsick=ifelse(hhmmbrsick%in%"Yes", 1, 0))%>%
-  mutate(income=recode(income, "Forth"=4, "Middle"=3, "Poorest"=1, "Richest"=5, "Second"=2))%>%
-  mutate_at(vars(total_litres, hhpple, sick_tlu, milk_tlu, hhmmbrsick, rcvdfds, grazedist, cshtrnsfrprog1, hhead, h_hoccuptn1, tlu, fdscr_other, fdscr_project,   h_heducation, total_milk_animals, tms_nutrcouns, enhanced_counseling, normal_counseling, income, no_births), funs(ifelse(is.na(.), 0, .)))%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate_at(vars(total_litres, hhpple, sick_tlu, milk_tlu, hhmmbrsick, rcvdfds, grazedist, cshtrnsfrprog1, hhead, h_hoccuptn1, tlu, fdscr_other, fdscr_project, h_heducation, total_milk_animals, tms_nutrcouns, enhanced_counseling, normal_counseling, income, no_births), funs(max(., na.rm=T)))%>%
-  ungroup()%>%
- # group_by(household_id, days_recruitment, animals_ltrs)%>%
- # mutate(total_litres_anim=max(total_litres_anim, na.rm=T))%>%
-  #ungroup()%>%
-  distinct()%>%
-  mutate(h_hoccuptn1=ifelse(h_hoccuptn1%in%1, "Livestock herding", "Non-livestock"))%>%
-  mutate(hhead=ifelse(hhead%in%1, "Female", "Male"))%>%
-  mutate(cshtrnsfrprog1=ifelse(cshtrnsfrprog1%in%0, "Yes", "No"))%>%
-  mutate(grazedist=recode(grazedist,"1"="Below 1 km", "2"="1-5 km", "3"="5-10km","4"="More than 10 km","5"="migration"))%>%
-  mutate(rcvdfds=ifelse(rcvdfds%in%1, "Yes", "No"))%>%
-  mutate(hhmmbrsick=ifelse(hhmmbrsick%in%1, "Yes","No"))%>%
-  mutate(fdscr_other=ifelse(fdscr_other%in%1, "Yes", "No"))%>%
-  mutate(fdscr_project=ifelse(fdscr_project%in%1, "No", "Yes"))%>%
+obj1_data<- obj1_data|>
+  mutate(h_hoccuptn1=ifelse(h_hoccuptn1%in%"Livestock herding", 1, 2))|>
+  mutate(hhead=ifelse(hhead%in%"Yes", 1, 0))|>
+  mutate(cshtrnsfrprog1=ifelse(cshtrnsfrprog1%in%"None", 1, 0))|>
+  mutate(h_heducation=ifelse(h_heducation%in%"No", 0, 1))|>
+  mutate(grazedist=recode(grazedist,"Below 1 km"= "1", "1-5 km"="2", "5-10km"="3", "More than 10 km"="4", "migration"="5"))|>
+  mutate(grazedist=as.numeric(grazedist))|>
+  mutate(rcvdfds=ifelse(rcvdfds%in%"Yes", 1, 0))|>
+  mutate(hhmmbrsick=ifelse(hhmmbrsick%in%"Yes", 1, 0))|>
+  mutate(income=recode(income, "Forth"=4, "Middle"=3, "Poorest"=1, "Richest"=5, "Second"=2))|>
+  mutate_at(vars(total_litres, hhpple, sick_tlu, milk_tlu, hhmmbrsick, rcvdfds, grazedist, cshtrnsfrprog1, hhead, h_hoccuptn1, tlu, fdscr_other, fdscr_project,   h_heducation, total_milk_animals, tms_nutrcouns, enhanced_counseling, normal_counseling, income, no_births), funs(ifelse(is.na(.), 0, .)))|>
+  group_by(household_id, days_recruitment)|>
+  mutate_at(vars(total_litres, hhpple, sick_tlu, milk_tlu, hhmmbrsick, rcvdfds, grazedist, cshtrnsfrprog1, hhead, h_hoccuptn1, tlu, fdscr_other, fdscr_project, h_heducation, total_milk_animals, tms_nutrcouns, enhanced_counseling, normal_counseling, income, no_births), funs(max(., na.rm=T)))|>
+  ungroup()|>
+ # group_by(household_id, days_recruitment, animals_ltrs)|>
+ # mutate(total_litres_anim=max(total_litres_anim, na.rm=T))|>
+  #ungroup()|>
+  distinct()|>
+  mutate(h_hoccuptn1=ifelse(h_hoccuptn1%in%1, "Livestock herding", "Non-livestock"))|>
+  mutate(hhead=ifelse(hhead%in%1, "Female", "Male"))|>
+  mutate(cshtrnsfrprog1=ifelse(cshtrnsfrprog1%in%0, "Yes", "No"))|>
+  mutate(grazedist=recode(grazedist,"1"="Below 1 km", "2"="1-5 km", "3"="5-10km","4"="More than 10 km","5"="migration"))|>
+  mutate(rcvdfds=ifelse(rcvdfds%in%1, "Yes", "No"))|>
+  mutate(hhmmbrsick=ifelse(hhmmbrsick%in%1, "Yes","No"))|>
+  mutate(fdscr_other=ifelse(fdscr_other%in%1, "Yes", "No"))|>
+  mutate(fdscr_project=ifelse(fdscr_project%in%1, "No", "Yes"))|>
   mutate(income=recode(income, "4"="Forth", "3"="Middle", "1"="Poorest", "5"="Richest", "2"="Second"))
 
 obj1_data$fdscr_other<- ifelse(obj1_data$days_recruitment<40, "No",obj1_data$fdscr_other )
@@ -1601,30 +1602,30 @@ obj1_data$milk_tlu1<- pp$milk_tlu
 obj1_data$total_litres1<- mm$total_litres
 
 
-obj1_data%>%
-  distinct()%>%
-  dplyr::select(household_id, days_recruitment)%>%
+obj1_data|>
+  distinct()|>
+  dplyr::select(household_id, days_recruitment)|>
   is.pbalanced()
 
-camels<- obj1_data%>%
-  filter(animals_ltrs%in%"camels_litres")%>%
-  distinct()
+# camels<- obj1_data|>
+#   filter(animals_ltrs%in%"camels_litres")|>
+#   distinct()
+# 
+# sheep<- obj1_data|>
+#   filter(animals_ltrs%in%"sheep_litres")|>
+#   distinct()
+# 
+# goats<- obj1_data|>
+#   filter(animals_ltrs%in%"goats_litres")|>
+#   distinct()
+# 
+# cows<- obj1_data|>
+#   filter(animals_ltrs%in%"cows_litres")|>
+#   distinct()
 
-sheep<- obj1_data%>%
-  filter(animals_ltrs%in%"sheep_litres")%>%
-  distinct()
 
-goats<- obj1_data%>%
-  filter(animals_ltrs%in%"goats_litres")%>%
-  distinct()
-
-cows<- obj1_data%>%
-  filter(animals_ltrs%in%"cows_litres")%>%
-  distinct()
-
-
-dta<-obj1_data%>%dplyr::select(household_id, days_recruitment)%>%
-  group_by(household_id, days_recruitment)%>%
+dta<-obj1_data|>dplyr::select(household_id, days_recruitment)|>
+  group_by(household_id, days_recruitment)|>
   dplyr::count()
 
 
@@ -1643,9 +1644,9 @@ obj1_data$fdscr_project1<- ifelse(obj1_data$fdscr_project%in%"Yes", 1, 0)
 obj1_data$enhanced_counseling1<- ifelse(obj1_data$enhanced_counseling%in%"1", 0, 1)
 obj1_data$fdscr_project1<- as.numeric(obj1_data$fdscr_project1)
 
-obj1_data<- obj1_data%>%
-  group_by(household_id, days_recruitment)%>%
-  mutate(nonmilk_tlu=tlu-milk_tlu)%>%
+obj1_data<- obj1_data|>
+  group_by(household_id, days_recruitment)|>
+  mutate(nonmilk_tlu=tlu-milk_tlu)|>
   ungroup()
 
 obj1_data$milk_tlu<- obj1_data$milk_tlu*7
@@ -1675,67 +1676,67 @@ milk_tlumodel<- plm(milk_tlu1~fdscr_project2, data=obj1_data, index=c("household
 
 ## arm 1 and 2
 
-arm12_obj1<- obj1_data%>%
+arm12_obj1<- obj1_data|>
   filter(study_arm%in%c("Intervention arm 1", "Intervention arm 2"))
 
 
 arm12_model1<- plm(total_litres1~enhanced_counseling1, data=arm12_obj1, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling") 
-feed_data1<- objective1_data%>%
-  dplyr::select(days_recruitment, fdscr_other)%>%
-  group_by(days_recruitment, fdscr_other)%>%
-  count()%>%
-  ungroup()%>%
-  filter(fdscr_other%in%"Yes")
+#feed_data1<- objective1_data|>
+#  dplyr::select(days_recruitment, fdscr_other)|>
+#  group_by(days_recruitment, fdscr_other)|>
+#  count()|>
+#  ungroup()|>
+#  filter(fdscr_other%in%"Yes")
   
-feed_data2<- objective1_data%>%
-  dplyr::select(days_recruitment, fdscr_project)%>%
-  group_by(days_recruitment, fdscr_project)%>%
-  count()%>%
-  ungroup()%>%
-  filter(fdscr_project%in%"Yes")
+#feed_data2<- objective1_data|>
+#  dplyr::select(days_recruitment, fdscr_project)|>
+#  group_by(days_recruitment, fdscr_project)|>
+#  count()|>
+#  ungroup()|>
+#  filter(fdscr_project%in%"Yes")
 
 
 
-ggplot()+geom_line(data=feed_data1, aes(x=days_recruitment, y=n, group=1), color="Red", size=1)+theme_bw()+geom_line(data=feed_data2, aes(x=days_recruitment, y=n, group=1), color="blue")
+#ggplot()+geom_line(data=feed_data1, aes(x=days_recruitment, y=n, group=1), color="Red", size=1)+theme_bw()+geom_line(data=feed_data2, aes(x=days_recruitment, y=n, group=1), color="blue")
 
 
-all_anim<- obj1_data%>%
-  dplyr::select(household_id, days_recruitment, total_litres_anim1,fdscr_project,animals_ltrs)%>%
-  mutate(fdscr_project=ifelse(fdscr_project%in%"Yes", 1, 0))%>%
-  mutate_at(vars(total_litres_anim1, fdscr_project), funs(ifelse(is.na(.), 0, .)))%>%
-  group_by(household_id, days_recruitment, animals_ltrs)%>%
-  mutate_at(vars(total_litres_anim1, fdscr_project), funs(max(., na.rm=T)))%>%
-  ungroup()%>%
-  distinct()
+#all_anim<- obj1_data|>
+#  dplyr::select(household_id, days_recruitment, total_litres_anim1,fdscr_project,animals_ltrs)|>
+#  mutate(fdscr_project=ifelse(fdscr_project%in%"Yes", 1, 0))|>
+#  mutate_at(vars(total_litres_anim1, fdscr_project), funs(ifelse(is.na(.), 0, .)))|>
+#  group_by(household_id, days_recruitment, animals_ltrs)|>
+  # mutate_at(vars(total_litres_anim1, fdscr_project), funs(max(., na.rm=T)))|>
+  # ungroup()|>
+  # distinct()
 
-al<- all_anim%>%
-  group_by(household_id, days_recruitment)%>%
-  count()
-
-
-camels<- all_anim%>%
-  filter(animals_ltrs%in%"camels_litres")%>%
-  distinct()
-
-sheep<- all_anim%>%
-  filter(animals_ltrs%in%"sheep_litres")%>%
-  distinct()
-
-goats<- all_anim%>%
-  filter(animals_ltrs%in%"goats_litres")%>%
-  distinct()
-
-cows<- all_anim%>%
-  filter(animals_ltrs%in%"cows_litres")%>%
-  distinct()
-## species models
-all_anim
-cattle_model<- plm(total_litres_anim1~fdscr_project+animals_ltrs, data=all_anim, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
+# al<- all_anim|>
+#   group_by(household_id, days_recruitment)|>
+#   count()
 
 
-sheep_model<- plm(total_litres_anim1~fdscr_project, data=sheep, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
+# camels<- all_anim|>
+#   filter(animals_ltrs%in%"camels_litres")|>
+#   distinct()
 
-goats_model<- plm(total_litres_anim1~fdscr_project, data=goats, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
+# sheep<- all_anim|>
+#   filter(animals_ltrs%in%"sheep_litres")|>
+#   distinct()
 
-camels_model<- plm(total_litres_anim1~fdscr_project, data=camels, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
+# goats<- all_anim|>
+#   filter(animals_ltrs%in%"goats_litres")|>
+#   distinct()
+
+# cows<- all_anim|>
+#   filter(animals_ltrs%in%"cows_litres")|>
+#   distinct()
+# ## species models
+# all_anim
+# cattle_model<- plm(total_litres_anim1~fdscr_project+animals_ltrs, data=all_anim, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
+
+
+# sheep_model<- plm(total_litres_anim1~fdscr_project, data=sheep, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
+# 
+# goats_model<- plm(total_litres_anim1~fdscr_project, data=goats, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
+# 
+# camels_model<- plm(total_litres_anim1~fdscr_project, data=camels, index=c("household_id", "days_recruitment"), effect = "individual", model="pooling")
 ```

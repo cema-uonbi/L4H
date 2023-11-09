@@ -1,0 +1,45 @@
+---
+title: "Investigating the impact of herd dynamics on livestock health"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+### Proposed analysis:
+
+- Interrupted time series to assess the impacts of when a household introduces a new animal into their herd- do this for both small ruminants and large ruminants
+- Growth curve analysis to see how the herd size changes contribute to herd health and also maybe to child nutrition
+- survival analysis of animals to assess what leads to animal mortality- is it the health management practices etc
+
+```{r}
+## import packages
+library(data.table)
+library(tidyverse)
+# import data
+
+baseline_household<- fread("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20baseline%20data.csv", na.strings = "---")
+
+quarterly_household <- fread("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20quarterly%20data.csv", na.strings = "---")
+
+followup_household <- fread("https://raw.githubusercontent.com/cema-uonbi/L4H/main/data/L4H%20cleaned%20followup%20data.csv",na.strings = "---")
+
+baseline_household1 <- baseline_household|>
+  select(household_id,interview_date, 109:122,126,139:143,158:170,177:180, 187:191,200:209, 219:228,320:324,   
+328:422,424:538,grazedist, rcvdfds)|>
+  mutate(type="baseline")
+
+quarterly_household1 <- quarterly_household|>
+  select(household_id,interview_date, 99:251,354:646,rcvdfds)|>
+  mutate(type="Quarterly")
+
+followup_household1 <- followup_household|>
+  select(household_id,interview_date,40:155, 210:291)|>
+  mutate(type="Followup")
+
+names(followup_household1) <- gsub("form_", "", names(followup_household1))
+
+followup_household1 <- followup_household1|>
+  rename("cttlebght"="copy_1_of_calves_givenout", "sheepgvnout"="copy_1_of_sheep_givenout",     "msheep_givenout"="copy_1_of_msheep_givenout",    "fsheep_givenout"="copy_1_of_fsheep_givenout",   "goats_givenout"="copy_1_of_goats_givenout",     "mgoats_givenout"="copy_1_of_mgoats_givenout",   "fgoats_givenout"="copy_1_of_fgoats_givenout",   "camels_givenout"= "copy_1_of_camels_givenout",    "mcamels_givenout"="copy_1_of_mcamels_givenout",  
+ "fcamels_givenout"="copy_1_of_fcamels_givenout",  "chicken_givenout"= "copy_1_of_chicken_givenout", "othersgivenout"= "copy_1_of_othersgivenout",    
+ "othersgivenout_num"="copy_1_of_othersgivenout_num")
+```
+
