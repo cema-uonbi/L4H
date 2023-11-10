@@ -38,8 +38,10 @@ followup_household1 <- followup_household|>
 names(followup_household1) <- gsub("form_", "", names(followup_household1))
 
 followup_household1 <- followup_household1|>
-  rename("cttlebght"="copy_1_of_calves_givenout", "sheepgvnout"="copy_1_of_sheep_givenout",     "msheep_givenout"="copy_1_of_msheep_givenout",    "fsheep_givenout"="copy_1_of_fsheep_givenout",   "goats_givenout"="copy_1_of_goats_givenout",     "mgoats_givenout"="copy_1_of_mgoats_givenout",   "fgoats_givenout"="copy_1_of_fgoats_givenout",   "camels_givenout"= "copy_1_of_camels_givenout",    "mcamels_givenout"="copy_1_of_mcamels_givenout",  
- "fcamels_givenout"="copy_1_of_fcamels_givenout",  "chicken_givenout"= "copy_1_of_chicken_givenout", "othersgivenout"= "copy_1_of_othersgivenout",    
- "othersgivenout_num"="copy_1_of_othersgivenout_num")
+  rename("cttlebght1"="copy_1_of_calves_givenout", "sheepgvnout"="copy_1_of_sheep_givenout",     "msheep_givenout1"="copy_1_of_msheep_givenout",    "fsheep_givenout1"="copy_1_of_fsheep_givenout",   "goats_givenout1"="copy_1_of_goats_givenout",     "mgoats_givenout1"="copy_1_of_mgoats_givenout",   "fgoats_givenout1"="copy_1_of_fgoats_givenout",   "camels_givenout1"= "copy_1_of_camels_givenout",    "mcamels_givenout1"="copy_1_of_mcamels_givenout",  
+ "fcamels_givenout1"="copy_1_of_fcamels_givenout",  "chicken_givenout1"= "copy_1_of_chicken_givenout", "othersgivenout1"= "copy_1_of_othersgivenout",    
+ "othersgivenout_num1"="copy_1_of_othersgivenout_num")
+
+
 ```
 
