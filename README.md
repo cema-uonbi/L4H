@@ -24,3 +24,5 @@ This repository contains:
 - Baseline data 
 - Six weeks followup data
 - Quarterly data
+
+The study design paper may be found here: https://doi.org/10.1177/03795721231195427 
